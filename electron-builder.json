@@ -1,0 +1,30 @@
+{
+  "appId": "com.nojsja.electronux",
+  "copyright": "nojsja",
+  "productName": "electronux",
+  "asar": false,
+  "directories": {
+    "buildResources": "resources/",
+    "output": "build/"
+  },
+  "files": ["package.json", "index.js", "dist/", "app/", "node_modules/", "resources/*.*"],
+  "linux": {
+    "icon": "build/",
+    "category": "System",
+    "description": "A System Management Tool Build For Manjaro Linux 17",
+    "synopsis": "electronux",
+    "target": ["zip"],
+    "publish": {
+      "provider": "github",
+      "repo": "https://github.com/NoJsJa/electronux.git",
+      "owner": "NoJsJa",
+      "vPrefixedTagName": true,
+      "host": "github.com",
+      "protocol": "https",
+      "token": "650eb5ae88fc8993e8c9b8030b811f734023e57a",
+      "private": true,
+      "releaseType": "release",
+      "publishAutoUpdate": true
+    }
+  }
+}
