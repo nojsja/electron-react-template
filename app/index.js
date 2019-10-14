@@ -12,12 +12,12 @@ render(
   <AppContainer>
     <App />
   </AppContainer>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 
 if (module.hot) {
   module.hot.accept('./App', () => {
     const NextRootContainer = require('./App').default;
     render(<NextRootContainer />, document.getElementById('root'));
-  })
+  });
 }

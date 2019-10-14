@@ -1,8 +1,7 @@
 const electron = require('electron');
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const url = require('url');
-const { ipcMain } = require('electron');
 
 /* ------------------- self module ------------------- */
 global.pathLocator = require('./app/utils/path-locator.js');
@@ -80,6 +79,9 @@ function createWindow() {
     title: 'electronux',
     autoHideMenuBar: true,
     icon: path.join(__dirname, 'resources/icon.png'),
+    webPreferences: {
+      nodeIntegration: true,
+    },
   });
 
   win.on('resize', () => {

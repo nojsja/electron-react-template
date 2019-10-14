@@ -1,4 +1,4 @@
-var vendor_45cc4e9479b9aa87a870 =
+var vendor_1d79972fa4fbf0476ea8 =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -1255,7 +1255,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 		return classes.join(' ');
 	}
 
-	if (typeof module !== 'undefined' && module.exports) {
+	if ( true && module.exports) {
 		classNames.default = classNames;
 		module.exports = classNames;
 	} else if (true) {
@@ -6992,7 +6992,7 @@ module.exports = cloneArrayBuffer;
 /* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(/*! ./_root */ "./node_modules/lodash/_root.js");
 
 /** Detect free variable `exports`. */
-var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
+var freeExports =  true && exports && !exports.nodeType && exports;
 
 /** Detect free variable `module`. */
 var freeModule = freeExports && typeof module == 'object' && module && !module.nodeType && module;
@@ -10963,7 +10963,7 @@ module.exports = nativeKeysIn;
 /* WEBPACK VAR INJECTION */(function(module) {var freeGlobal = __webpack_require__(/*! ./_freeGlobal */ "./node_modules/lodash/_freeGlobal.js");
 
 /** Detect free variable `exports`. */
-var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
+var freeExports =  true && exports && !exports.nodeType && exports;
 
 /** Detect free variable `module`. */
 var freeModule = freeExports && typeof module == 'object' && module && !module.nodeType && module;
@@ -15247,7 +15247,7 @@ module.exports = isBoolean;
     stubFalse = __webpack_require__(/*! ./stubFalse */ "./node_modules/lodash/stubFalse.js");
 
 /** Detect free variable `exports`. */
-var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
+var freeExports =  true && exports && !exports.nodeType && exports;
 
 /** Detect free variable `module`. */
 var freeModule = freeExports && typeof module == 'object' && module && !module.nodeType && module;
@@ -19929,7 +19929,7 @@ function createPropDecorator(propertyInitiallyEnumerable, propertyCreator) {
                 propertyCreator(target, prop, descriptor, target, decoratorArguments);
                 return null;
             }
-            if ("development" !== "production" && !quacksLikeADecorator(arguments))
+            if ( true && !quacksLikeADecorator(arguments))
                 fail$1("This function is a decorator, but it wasn't invoked like a decorator");
             if (!Object.prototype.hasOwnProperty.call(target, "__mobxDecorators")) {
                 var inheritedDecorators = target.__mobxDecorators;
@@ -20065,12 +20065,12 @@ function allowStateChangesEnd(prev) {
 }
 
 function dontReassignFields() {
-    fail$1("development" !== "production" && "@action fields are not reassignable");
+    fail$1( true && "@action fields are not reassignable");
 }
 function namedActionDecorator(name) {
     return function (target, prop, descriptor) {
         if (descriptor) {
-            if ("development" !== "production" && descriptor.get !== undefined) {
+            if ( true && descriptor.get !== undefined) {
                 return fail$1("@action cannot be used with getters");
             }
             // babel / typescript
@@ -20489,7 +20489,7 @@ var ComputedValue = /** @class */ (function () {
         this.isRunningSetter = false;
         this.isTracing = TraceMode.NONE;
         this.firstGet = true;
-        if ("development" !== "production" && !options.get)
+        if ( true && !options.get)
             return fail$1("missing option for computed: get");
         this.derivation = options.get;
         this.name = options.name || "ComputedValue@" + getNextId();
@@ -20559,7 +20559,7 @@ var ComputedValue = /** @class */ (function () {
             }
         }
         else
-            invariant(false, "development" !== "production" &&
+            invariant(false,  true &&
                 "[ComputedValue '" + this
                     .name + "'] It is not possible to assign a new value to a computed value.");
     };
@@ -20938,7 +20938,7 @@ var ObservableObjectAdministration = /** @class */ (function () {
      * for callback details
      */
     ObservableObjectAdministration.prototype.observe = function (callback, fireImmediately) {
-        "development" !== "production" &&
+         true &&
             invariant(fireImmediately !== true, "`observe` doesn't support the fire immediately property for observable objects.");
         return registerListener(this, callback);
     };
@@ -20960,7 +20960,7 @@ function asObservableObject(target, name, defaultEnhancer) {
     var adm = target.$mobx;
     if (adm)
         return adm;
-    "development" !== "production" &&
+     true &&
         invariant(Object.isExtensible(target), "Cannot make the designated object observable; it is not extensible");
     if (!isPlainObject(target))
         name = (target.constructor.name || "ObservableObject") + "@" + getNextId();
@@ -21094,7 +21094,7 @@ function _isObservable(value, property) {
     if (value === null || value === undefined)
         return false;
     if (property !== undefined) {
-        if ("development" !== "production" &&
+        if ( true &&
             (isObservableMap(value) || isObservableArray(value)))
             return fail$1("isObservable(object, propertyName) is not supported for arrays and maps. Use map.has or array.length instead.");
         if (isObservableObject(value)) {
@@ -21112,13 +21112,13 @@ function _isObservable(value, property) {
 }
 function isObservable(value) {
     if (arguments.length !== 1)
-        fail$1("development" !== "production" &&
+        fail$1( true &&
             "isObservable expects only 1 argument. Use isObservableProp to inspect the observability of a property");
     return _isObservable(value);
 }
 function isObservableProp(value, propName) {
     if (typeof propName !== "string")
-        return fail$1("development" !== "production" && "expected a property name as second argument");
+        return fail$1( true && "expected a property name as second argument");
     return _isObservable(value, propName);
 }
 
@@ -21137,13 +21137,13 @@ function _isComputed(value, property) {
 }
 function isComputed(value) {
     if (arguments.length > 1)
-        return fail$1("development" !== "production" &&
+        return fail$1( true &&
             "isComputed expects only 1 argument. Use isObservableProp to inspect the observability of a property");
     return _isComputed(value);
 }
 function isComputedProp(value, propName) {
     if (typeof propName !== "string")
-        return fail$1("development" !== "production" &&
+        return fail$1( true &&
             "isComputed expected a property name as second argument");
     return _isComputed(value, propName);
 }
@@ -21213,7 +21213,7 @@ function extendObservable(target, properties, decorators, options) {
             var decorator = decorators && key in decorators
                 ? decorators[key]
                 : descriptor.get ? computedDecorator : defaultDecorator;
-            if ("development" !== "production" && typeof decorator !== "function")
+            if ( true && typeof decorator !== "function")
                 return fail$1("Not a valid decorator for '" + key + "', got: " + decorator);
             var resultDescriptor = decorator(target, key, descriptor, true);
             if (resultDescriptor // otherwise, assume already applied, due to `applyToInstance`
@@ -21286,7 +21286,7 @@ function createObservable(v, arg2, arg3) {
     if (res !== v)
         return res;
     // otherwise, just box it
-    fail$1("development" !== "production" &&
+    fail$1( true &&
         "The provided value could not be converted into an observable. If you want just create an observable reference to the object use 'observable.box(value)'");
 }
 var observableFactories = {
@@ -21376,7 +21376,7 @@ function shallowEnhancer(v, _, name) {
         return observable.object(v, undefined, { name: name, deep: false });
     if (isES6Map(v))
         return observable.map(v, { name: name, deep: false });
-    return fail$1("development" !== "production" &&
+    return fail$1( true &&
         "The shallow modifier / decorator can only used in combination with arrays, objects and maps");
 }
 function referenceEnhancer(newValue) {
@@ -21384,7 +21384,7 @@ function referenceEnhancer(newValue) {
     return newValue;
 }
 function refStructEnhancer(v, oldValue, name) {
-    if ("development" !== "production" && isObservable(v))
+    if ( true && isObservable(v))
         throw "observable.struct should not be used with observable values";
     if (deepEqual(v, oldValue))
         return oldValue;
@@ -21703,7 +21703,7 @@ var ObservableMap = /** @class */ (function () {
      * for callback details
      */
     ObservableMap.prototype.observe = function (listener, fireImmediately) {
-        "development" !== "production" &&
+         true &&
             invariant(fireImmediately !== true, "`observe` doesn't support fireImmediately=true in combination with maps.");
         return registerListener(this, listener);
     };
@@ -21723,7 +21723,7 @@ function getAtom(thing, property) {
     if (typeof thing === "object" && thing !== null) {
         if (isObservableArray(thing)) {
             if (property !== undefined)
-                fail$1("development" !== "production" &&
+                fail$1( true &&
                     "It is not possible to get index atoms from arrays");
             return thing.$mobx.atom;
         }
@@ -21733,7 +21733,7 @@ function getAtom(thing, property) {
                 return getAtom(anyThing._keys);
             var observable = anyThing._data.get(property) || anyThing._hasMap.get(property);
             if (!observable)
-                fail$1("development" !== "production" &&
+                fail$1( true &&
                     "the entry '" + property + "' does not exist in the observable map '" + getDebugName(thing) + "'");
             return observable;
         }
@@ -21743,10 +21743,10 @@ function getAtom(thing, property) {
             thing[property]; // See #1072
         if (isObservableObject(thing)) {
             if (!property)
-                return fail$1("development" !== "production" && "please specify a property");
+                return fail$1( true && "please specify a property");
             var observable = thing.$mobx.values[property];
             if (!observable)
-                fail$1("development" !== "production" &&
+                fail$1( true &&
                     "no observable property '" + property + "' found on the observable object '" + getDebugName(thing) + "'");
             return observable;
         }
@@ -21760,7 +21760,7 @@ function getAtom(thing, property) {
             return thing.$mobx;
         }
     }
-    return fail$1("development" !== "production" && "Cannot obtain atom from " + thing);
+    return fail$1( true && "Cannot obtain atom from " + thing);
 }
 function getAdministration(thing, property) {
     if (!thing)
@@ -21775,7 +21775,7 @@ function getAdministration(thing, property) {
     initializeInstance(thing);
     if (thing.$mobx)
         return thing.$mobx;
-    fail$1("development" !== "production" && "Cannot obtain administration from " + thing);
+    fail$1( true && "Cannot obtain administration from " + thing);
 }
 function getDebugName(thing, property) {
     var named;
@@ -21799,7 +21799,7 @@ function interceptHook(hook, thing, arg2, arg3) {
     var cb = typeof arg2 === "string" ? arg3 : arg2;
     var orig = atom[hook];
     if (typeof orig !== "function")
-        return fail$1("development" !== "production" && "Not an atom that can be (un)observed");
+        return fail$1( true && "Not an atom that can be (un)observed");
     atom[hook] = function () {
         orig.call(this);
         cb.call(this);
@@ -22537,7 +22537,7 @@ function isPropertyConfigurable(object, prop) {
     return !descriptor || (descriptor.configurable !== false && descriptor.writable !== false);
 }
 function assertPropertyConfigurable(object, prop) {
-    if ("development" !== "production" && !isPropertyConfigurable(object, prop))
+    if ( true && !isPropertyConfigurable(object, prop))
         fail$1("Cannot make property '" + prop + "' observable, it is not configurable and writable in the target object");
 }
 function createInstanceofPredicate(name, clazz) {
@@ -23085,11 +23085,11 @@ function checkIfStateModificationsAreAllowed(atom) {
     var hasObservers$$1 = atom.observers.length > 0;
     // Should never be possible to change an observed observable from inside computed, see #798
     if (globalState.computationDepth > 0 && hasObservers$$1)
-        fail$1("development" !== "production" &&
+        fail$1( true &&
             "Computed values are not allowed to cause side effects by changing observables that are already being observed. Tried to modify: " + atom.name);
     // Should not be possible to change observed state outside strict mode, except during initialization, see #563
     if (!globalState.allowStateChanges && (hasObservers$$1 || globalState.enforceActions === "strict"))
-        fail$1("development" !== "production" &&
+        fail$1( true &&
             (globalState.enforceActions
                 ? "Since strict-mode is enabled, changing observed observable values outside actions is not allowed. Please wrap the code in an `action` if this change is intended. Tried to modify: "
                 : "Side effects like changing state are not allowed at this point. Are you trying to modify state from, for example, the render function of a React component? Tried to modify: ") +
@@ -23230,7 +23230,7 @@ function trace() {
         enterBreakPoint = args.pop();
     var derivation = getAtomFromArgs(args);
     if (!derivation) {
-        return fail$1("development" !== "production" &&
+        return fail$1( true &&
             "'trace(break?)' can only be used inside a tracked computed value or a Reaction. Consider passing in the computed value or reaction explicitly");
     }
     if (derivation.isTracing === TraceMode.NONE) {
@@ -23485,7 +23485,7 @@ function _when(predicate, effect, opts) {
     return disposer;
 }
 function whenPromise(predicate, opts) {
-    if ("development" !== "production" && opts && opts.onError)
+    if ( true && opts && opts.onError)
         return fail$1("the options 'onError' and 'promise' cannot be combined");
     var cancel;
     var res = new Promise(function (resolve, reject) {
@@ -23509,7 +23509,7 @@ function keys(obj) {
     if (isObservableArray(obj)) {
         return obj.map(function (_, index) { return index; });
     }
-    return fail$1("development" !== "production" &&
+    return fail$1( true &&
         "'keys()' can only be used on observable objects, arrays and maps");
 }
 function values(obj) {
@@ -23522,7 +23522,7 @@ function values(obj) {
     if (isObservableArray(obj)) {
         return obj.slice();
     }
-    return fail$1("development" !== "production" &&
+    return fail$1( true &&
         "'values()' can only be used on observable objects, arrays and maps");
 }
 function entries(obj) {
@@ -23535,7 +23535,7 @@ function entries(obj) {
     if (isObservableArray(obj)) {
         return obj.map(function (key, index) { return [index, key]; });
     }
-    return fail$1("development" !== "production" &&
+    return fail$1( true &&
         "'entries()' can only be used on observable objects, arrays and maps");
 }
 function set(obj, key, value) {
@@ -23575,7 +23575,7 @@ function set(obj, key, value) {
         endBatch();
     }
     else {
-        return fail$1("development" !== "production" &&
+        return fail$1( true &&
             "'set()' can only be used on observable objects, arrays and maps");
     }
 }
@@ -23594,7 +23594,7 @@ function remove(obj, key) {
         obj.splice(key, 1);
     }
     else {
-        return fail$1("development" !== "production" &&
+        return fail$1( true &&
             "'remove()' can only be used on observable objects, arrays and maps");
     }
 }
@@ -23612,7 +23612,7 @@ function has$1(obj, key) {
         return key >= 0 && key < obj.length;
     }
     else {
-        return fail$1("development" !== "production" &&
+        return fail$1( true &&
             "'has()' can only be used on observable objects, arrays and maps");
     }
 }
@@ -23629,13 +23629,13 @@ function get(obj, key) {
         return obj[key];
     }
     else {
-        return fail$1("development" !== "production" &&
+        return fail$1( true &&
             "'get()' can only be used on observable objects, arrays and maps");
     }
 }
 
 function decorate(thing, decorators) {
-    "development" !== "production" &&
+     true &&
         invariant(isPlainObject(decorators), "Decorators should be a key value map");
     var target = typeof thing === "function" ? thing.prototype : thing;
     var _loop_1 = function (prop) {
@@ -23643,7 +23643,7 @@ function decorate(thing, decorators) {
         if (!Array.isArray(propertyDecorators)) {
             propertyDecorators = [propertyDecorators];
         }
-        "development" !== "production" &&
+         true &&
             invariant(propertyDecorators.every(function (decorator) { return typeof decorator === "function"; }), "Decorate: expected a decorator function or array of decorator functions for '" + prop + "'");
         var descriptor = Object.getOwnPropertyDescriptor(target, prop);
         var newDescriptor = propertyDecorators.reduce(function (accDescriptor, decorator) { return decorator(target, prop, accDescriptor); }, descriptor);
@@ -23703,7 +23703,7 @@ function configure(options) {
 var generatorId = 0;
 function flow(generator) {
     if (arguments.length !== 1)
-        fail$1("development" && "Flow expects one 1 argument and cannot be used as decorator");
+        fail$1( true && "Flow expects one 1 argument and cannot be used as decorator");
     var name = generator.name || "<unnamed flow>";
     // Implementation based on https://github.com/tj/co/blob/master/index.js
     return function () {
@@ -23853,16 +23853,16 @@ function interceptReads(thing, propOrHandler, handler) {
     }
     else if (isObservableObject(thing)) {
         if (typeof propOrHandler !== "string")
-            return fail$1("development" !== "production" &&
+            return fail$1( true &&
                 "InterceptReads can only be used with a specific property, not with an object in general");
         target = getAdministration(thing, propOrHandler);
     }
     else {
-        return fail$1("development" !== "production" &&
+        return fail$1( true &&
             "Expected observable map, object or array as first array");
     }
     if (target.dehancer !== undefined)
-        return fail$1("development" !== "production" && "An intercept reader was already established");
+        return fail$1( true && "An intercept reader was already established");
     target.dehancer = typeof propOrHandler === "function" ? propOrHandler : handler;
     return function () {
         target.dehancer = undefined;
@@ -23919,8 +23919,7 @@ if (typeof __MOBX_DEVTOOLS_GLOBAL_HOOK__ === "object") {
     });
 }
 // TODO: remove in some future build
-if ("development" !== "production" &&
-    typeof module !== "undefined" &&
+if ( true &&
     typeof module.exports !== "undefined") {
     var warnedAboutDefaultExport_1 = false;
     Object.defineProperty(module.exports, "default", {
@@ -25002,7 +25001,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
           );
           err.name = 'Invariant Violation';
           throw err;
-        } else if ("development" !== 'production' && typeof console !== 'undefined') {
+        } else if ( true && typeof console !== 'undefined') {
           // Old behavior for people using React.PropTypes
           var cacheKey = componentName + ':' + propName;
           if (
@@ -32923,7 +32922,7 @@ function setInitialDOMProperties(tag, domElement, rootContainerElement, nextProp
       // on server rendering (but we *do* want to emit it in SSR).
     } else if (registrationNameModules.hasOwnProperty(propKey)) {
       if (nextProp != null) {
-        if (true && typeof nextProp !== 'function') {
+        if ( true && typeof nextProp !== 'function') {
           warnForInvalidEventListener(propKey, nextProp);
         }
         ensureListeningTo(rootContainerElement, propKey);
@@ -33268,7 +33267,7 @@ function diffProperties(domElement, tag, lastRawProps, nextRawProps, rootContain
     } else if (registrationNameModules.hasOwnProperty(propKey)) {
       if (nextProp != null) {
         // We eagerly listen to this even though we haven't committed yet.
-        if (true && typeof nextProp !== 'function') {
+        if ( true && typeof nextProp !== 'function') {
           warnForInvalidEventListener(propKey, nextProp);
         }
         ensureListeningTo(rootContainerElement, propKey);
@@ -33450,14 +33449,14 @@ function diffHydratedProperties(domElement, tag, rawProps, parentNamespace, root
       // TODO: Should we use domElement.firstChild.nodeValue to compare?
       if (typeof nextProp === 'string') {
         if (domElement.textContent !== nextProp) {
-          if (true && !suppressHydrationWarning) {
+          if ( true && !suppressHydrationWarning) {
             warnForTextDifference(domElement.textContent, nextProp);
           }
           updatePayload = [CHILDREN, nextProp];
         }
       } else if (typeof nextProp === 'number') {
         if (domElement.textContent !== '' + nextProp) {
-          if (true && !suppressHydrationWarning) {
+          if ( true && !suppressHydrationWarning) {
             warnForTextDifference(domElement.textContent, nextProp);
           }
           updatePayload = [CHILDREN, '' + nextProp];
@@ -33465,12 +33464,12 @@ function diffHydratedProperties(domElement, tag, rawProps, parentNamespace, root
       }
     } else if (registrationNameModules.hasOwnProperty(propKey)) {
       if (nextProp != null) {
-        if (true && typeof nextProp !== 'function') {
+        if ( true && typeof nextProp !== 'function') {
           warnForInvalidEventListener(propKey, nextProp);
         }
         ensureListeningTo(rootContainerElement, propKey);
       }
-    } else if (true &&
+    } else if ( true &&
     // Convince Flow we've calculated it (it's DEV-only in this method.)
     typeof isCustomComponentTag === 'boolean') {
       // Validate that the properties correspond to their expected values.
@@ -34261,7 +34260,7 @@ function didNotMatchHydratedContainerTextInstance(parentContainer, textInstance,
 }
 
 function didNotMatchHydratedTextInstance(parentType, parentProps, parentInstance, textInstance, text) {
-  if (true && parentProps[SUPPRESS_HYDRATION_WARNING] !== true) {
+  if ( true && parentProps[SUPPRESS_HYDRATION_WARNING] !== true) {
     warnForUnmatchedText(textInstance, text);
   }
 }
@@ -34277,7 +34276,7 @@ function didNotHydrateContainerInstance(parentContainer, instance) {
 }
 
 function didNotHydrateInstance(parentType, parentProps, parentInstance, instance) {
-  if (true && parentProps[SUPPRESS_HYDRATION_WARNING] !== true) {
+  if ( true && parentProps[SUPPRESS_HYDRATION_WARNING] !== true) {
     if (instance.nodeType === ELEMENT_NODE) {
       warnForDeletedHydratableElement(parentInstance, instance);
     } else {
@@ -34299,13 +34298,13 @@ function didNotFindHydratableContainerTextInstance(parentContainer, text) {
 }
 
 function didNotFindHydratableInstance(parentType, parentProps, parentInstance, type, props) {
-  if (true && parentProps[SUPPRESS_HYDRATION_WARNING] !== true) {
+  if ( true && parentProps[SUPPRESS_HYDRATION_WARNING] !== true) {
     warnForInsertedHydratedElement(parentInstance, type, props);
   }
 }
 
 function didNotFindHydratableTextInstance(parentType, parentProps, parentInstance, text) {
-  if (true && parentProps[SUPPRESS_HYDRATION_WARNING] !== true) {
+  if ( true && parentProps[SUPPRESS_HYDRATION_WARNING] !== true) {
     warnForInsertedHydratedText(parentInstance, text);
   }
 }
@@ -35025,7 +35024,7 @@ function catchErrors(fn) {
     try {
       return fn(arg);
     } catch (err) {
-      if (true && !hasLoggedError) {
+      if ( true && !hasLoggedError) {
         hasLoggedError = true;
         warningWithoutStack$1(false, 'React DevTools encountered an error: %s', err);
       }
@@ -41136,7 +41135,7 @@ var replayUnitOfWork = void 0;
 var isReplayingFailedUnitOfWork = void 0;
 var originalReplayError = void 0;
 var rethrowOriginalError = void 0;
-if (true && replayFailedUnitOfWorkWithInvokeGuardedCallback) {
+if ( true && replayFailedUnitOfWorkWithInvokeGuardedCallback) {
   stashedWorkInProgressProperties = null;
   isReplayingFailedUnitOfWork = false;
   originalReplayError = null;
@@ -41540,7 +41539,7 @@ function commitRoot(root, finishedWork) {
   stopCommitLifeCyclesTimer();
   stopCommitTimer();
   onCommitRoot(finishedWork.stateNode);
-  if (true && ReactFiberInstrumentation_1.debugTool) {
+  if ( true && ReactFiberInstrumentation_1.debugTool) {
     ReactFiberInstrumentation_1.debugTool.onCommitWork(finishedWork);
   }
 
@@ -41702,7 +41701,7 @@ function completeUnitOfWork(workInProgress) {
 
       if (next !== null) {
         stopWorkTimer(workInProgress);
-        if (true && ReactFiberInstrumentation_1.debugTool) {
+        if ( true && ReactFiberInstrumentation_1.debugTool) {
           ReactFiberInstrumentation_1.debugTool.onCompleteWork(workInProgress);
         }
         // If completing this work spawned new work, do that next. We'll come
@@ -41745,7 +41744,7 @@ function completeUnitOfWork(workInProgress) {
         }
       }
 
-      if (true && ReactFiberInstrumentation_1.debugTool) {
+      if ( true && ReactFiberInstrumentation_1.debugTool) {
         ReactFiberInstrumentation_1.debugTool.onCompleteWork(workInProgress);
       }
 
@@ -41784,7 +41783,7 @@ function completeUnitOfWork(workInProgress) {
 
       if (_next !== null) {
         stopWorkTimer(workInProgress);
-        if (true && ReactFiberInstrumentation_1.debugTool) {
+        if ( true && ReactFiberInstrumentation_1.debugTool) {
           ReactFiberInstrumentation_1.debugTool.onCompleteWork(workInProgress);
         }
 
@@ -41815,7 +41814,7 @@ function completeUnitOfWork(workInProgress) {
         returnFiber.effectTag |= Incomplete;
       }
 
-      if (true && ReactFiberInstrumentation_1.debugTool) {
+      if ( true && ReactFiberInstrumentation_1.debugTool) {
         ReactFiberInstrumentation_1.debugTool.onCompleteWork(workInProgress);
       }
 
@@ -41851,7 +41850,7 @@ function performUnitOfWork(workInProgress) {
     setCurrentFiber(workInProgress);
   }
 
-  if (true && replayFailedUnitOfWorkWithInvokeGuardedCallback) {
+  if ( true && replayFailedUnitOfWorkWithInvokeGuardedCallback) {
     stashedWorkInProgressProperties = assignFiberPropertiesInDEV(stashedWorkInProgressProperties, workInProgress);
   }
 
@@ -41881,7 +41880,7 @@ function performUnitOfWork(workInProgress) {
       rethrowOriginalError();
     }
   }
-  if (true && ReactFiberInstrumentation_1.debugTool) {
+  if ( true && ReactFiberInstrumentation_1.debugTool) {
     ReactFiberInstrumentation_1.debugTool.onBeginWork(workInProgress);
   }
 
@@ -41992,7 +41991,7 @@ function renderRoot(root, isYieldy, isExpired) {
         }
 
         var failedUnitOfWork = nextUnitOfWork;
-        if (true && replayFailedUnitOfWorkWithInvokeGuardedCallback) {
+        if ( true && replayFailedUnitOfWorkWithInvokeGuardedCallback) {
           replayUnitOfWork(failedUnitOfWork, thrownValue, isYieldy);
         }
 
@@ -42371,7 +42370,7 @@ function scheduleWork(fiber, expirationTime) {
 
   var root = scheduleWorkToRoot(fiber, expirationTime);
   if (root === null) {
-    if (true && (fiber.tag === ClassComponent || fiber.tag === ClassComponentLazy)) {
+    if ( true && (fiber.tag === ClassComponent || fiber.tag === ClassComponentLazy)) {
       warnAboutUpdateOnUnmounted(fiber);
     }
     return;
@@ -73929,7 +73928,7 @@ function Breadcrumb(props) {
     childElements.push(breadcrumbElement); // divider
 
     if (index !== sections.length - 1) {
-      var key = "".concat(breadcrumbElement.key, "_divider") || JSON.stringify(section);
+      var key = "".concat(breadcrumbElement.key, "_divider") || false;
       childElements.push(_BreadcrumbDivider__WEBPACK_IMPORTED_MODULE_7__["default"].create({
         content: divider,
         icon: icon,
@@ -97136,7 +97135,7 @@ g = (function() {
 
 try {
 	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1, eval)("this");
+	g = g || new Function("return this")();
 } catch (e) {
 	// This works if the window reference is available
 	if (typeof window === "object") g = window;
