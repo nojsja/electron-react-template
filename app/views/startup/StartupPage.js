@@ -31,7 +31,7 @@ class StartupPage extends React.Component {
   render() {
     return (
       <div>
-        startup
+        startup page
       </div>
     );
   }

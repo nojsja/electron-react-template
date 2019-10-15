@@ -4,9 +4,7 @@ import { Menu, Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import {
   Route, BrowserRouter as Router, Link,
-} from 'react-router-dom';
-
-import StartupPage from './startup/StartupPage';
+} from 'react-router';
 
 // 批量引入所有图片(可以指定所有图片类型)
 // const requireContext = require.context('resources/install', true, /^\.\/.*\.(jpg|png)$/);
@@ -16,9 +14,7 @@ requireContext.keys().map(requireContext);
 @inject('pub') @observer
 class HomePage extends Component {
   static propTypes = {
-    pub: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
-    match: PropTypes.object.isRequired,
+
   }
 
   constructor(props) {
@@ -43,16 +39,14 @@ class HomePage extends Component {
   /* ------------------- page render ------------------- */
 
   render() {
-    const { match } = this.props;
+    const { match, children } = this.props;
     return (
       <div className="container-router">
         HomePage
         <p>
           <Link to="/startup">startup</Link>
         </p>
-        <div>
-          <Route path={`${match.path}startup`} component={StartupPage} />
-        </div>
+        { children }
       </div>
     );
   }
