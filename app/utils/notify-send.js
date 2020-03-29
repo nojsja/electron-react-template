@@ -5,11 +5,9 @@
 
 const { Notification } = require('electron');
 
-function notifySend({ ...options }) {
-  const {
-    title, body, icon, delay,
-  } = { ...options };
-
+function notifySend({
+  title, body, icon, delay,
+}) {
   const notify = new Notification({
     title,
     body,

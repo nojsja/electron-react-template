@@ -1,99 +1,24 @@
 const electron = require('electron');
 const { app, BrowserWindow, ipcMain } = require('electron');
-const path = require('path');
-const url = require('url');
 
 /* ------------------- self module ------------------- */
 global.pathLocator = require('./app/utils/path-locator.js');
 global.consoleLog = require('./app/utils/console-log.js');
-const ipcMainListener = require('./app/services/main-serv/ipcMainListener');
+const IpcMainClass = require('./app/services/main-service/');
+const IpcMaiWindowClass = require('./app/services/main-service/windowManage');
 const viewConf = require('./app/configure/view-conf');
 
 /* ------------------- var ------------------- */
 const nodeEnv = process.env.NODE_ENV;
-let win;
+global.nodeEnv = process.env.NODE_ENV;
 
 /* ------------------- middleware ------------------- */
 
 /* ------------------- ipcMain ------------------- */
-ipcMainListener(ipcMain);
+const ipcMainProcess = new IpcMainClass(ipcMain);
+const ipcMainWindow = new IpcMaiWindowClass();
 
 /* ------------------- func  ------------------- */
-
-// 读取应用设置 //
-function getAppConf() {
-  let { width, height } = electron.screen.getPrimaryDisplay().workAreaSize; // 硬件参数
-  const viewInfo = viewConf.read(); // 用户配置文件
-
-  if (!viewInfo.error && viewInfo.result.width && viewInfo.result.height) {
-    width = viewInfo.result.width;
-    height = viewInfo.result.height;
-    // 存到内存中
-    viewConf.set({
-      width,
-      height,
-    });
-  } else {
-    width *= (3 / 6);
-    height *= (4 / 6);
-  }
-
-  viewConf.set({
-    width, height,
-  });
-
-  return {
-    width,
-    height,
-  };
-}
-
-// 根据运行环境加载窗口 //
-function loadWindow(window, env) {
-  if (env === 'development') {
-    // wait for webpack-dev-server start
-    setTimeout(() => {
-      window.loadURL(url.format({
-        pathname: 'localhost:3000',
-        protocol: 'http:',
-        slashes: true,
-      }));
-      // window.webContents.openDevTools();
-    }, 1e3);
-  } else {
-    window.loadURL(url.format({
-      pathname: path.resolve(__dirname, 'dist', 'index.html'),
-      protocol: 'file:',
-      slashes: true,
-    }));
-  }
-}
-
-/* ------------------- main window ------------------- */
-
-function createWindow() {
-  const { width, height } = getAppConf();
-  win = new BrowserWindow({
-    width,
-    height,
-    title: 'electronux',
-    autoHideMenuBar: true,
-    icon: path.join(__dirname, 'resources/icon.png'),
-    webPreferences: {
-      nodeIntegration: true,
-    },
-  });
-
-  win.on('resize', () => {
-    const [_width, _height] = win.getContentSize();
-    viewConf.set({
-      width: _width,
-      height: _height,
-    });
-  });
-
-  loadWindow(win, nodeEnv);
-}
 
 /* ------------------- electron event ------------------- */
 
@@ -101,12 +26,12 @@ app.on('ready', () => {
   if (nodeEnv === 'development') {
     require('source-map-support').install();
   }
-  createWindow();
+  ipcMainWindow.createWindow();
 });
 
 app.on('window-all-closed', () => {
   console.log('window-all-closed');
-  viewConf.write().then(() => 0, (err) => {
+  ipcMainWindow.writeAppConf().then(() => 0, (err) => {
     console.error(err);
     throw new Error('App quit: view-conf write error !');
   });
@@ -128,7 +53,7 @@ app.on('quit', () => {
 });
 
 app.on('activate', () => {
-  if (win === null) {
-    createWindow();
+  if (ipcMainWindow.window === null) {
+    ipcMainWindow.createWindow();
   }
 });
