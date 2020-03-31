@@ -55,7 +55,7 @@ class WindowManagement {
       }, 1e3);
     } else {
       this.window.loadURL(url.format({
-        pathname: path.resolve(__dirname, 'dist', 'index.html'),
+        pathname: path.resolve(process.cwd(), 'dist', 'index.html'),
         protocol: 'file:',
         slashes: true,
       }));
@@ -68,11 +68,14 @@ class WindowManagement {
     this.window = new BrowserWindow({
       width,
       height,
+      minWidth: 800,
+      minHeight: 600,
       title: 'electronux',
       autoHideMenuBar: true,
-      icon: path.join(__dirname, 'resources/icon.png'),
+      icon: path.join(process.cwd(), 'resources/icon.png'),
       webPreferences: {
         nodeIntegration: true,
+        enableRemoteModule: true,
       },
     });
 

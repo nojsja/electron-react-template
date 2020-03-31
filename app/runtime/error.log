@@ -1,4 +1,11 @@
-ReferenceError: window is not defined
-    at Timeout._onTimeout (/home/nojsja/github/electron-react-template/app/services/main-service/windowManage.js:49:9)
-    at listOnTimeout (internal/timers.js:531:17)
-    at processTimers (internal/timers.js:475:7)
+ReferenceError: ping is not defined
+    at new Node (/home/nojsja/github/datatom/rhinodisk/server/app/model/Node.js:10:24)
+    at nodeManage (/home/nojsja/github/datatom/rhinodisk/server/app/services/main/nodeManage.js:4:21)
+    at new IpcMainProcess (/home/nojsja/github/datatom/rhinodisk/server/app/services/main/index.js:22:22)
+    at Object.<anonymous> (/home/nojsja/github/datatom/rhinodisk/server/main.js:17:25)
+    at Module._compile (internal/modules/cjs/loader.js:968:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:986:10)
+    at Module.load (internal/modules/cjs/loader.js:816:32)
+    at Module._load (internal/modules/cjs/loader.js:728:14)
+    at Module._load (electron/js2c/asar.js:717:26)
+    at Function.Module._load (electron/js2c/asar.js:717:26)

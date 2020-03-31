@@ -1,0 +1,15 @@
+{
+  "node": [
+    {
+      "host": "10.0.9.67",
+      "defaulted": false
+    },
+    {
+      "host": "10.0.9.68",
+      "defaulted": true
+    },
+    {
+      "host": "10.0.9.69"
+    }
+  ]
+}

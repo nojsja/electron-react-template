@@ -5,12 +5,20 @@
 const path = require('path');
 const fs = require('fs');
 
-const notifySend = require('../../utils/notify-send.js');
+const { notifySend } = require('../../utils/utils');
+const userManage = require('./userManage');
+const settingManage = require('./settingManage');
+const nodeManage = require('./nodeManage');
 
 class IpcMainProcess {
   constructor(ipc) {
     this.ipc = ipc;
-    this.ipc.on('notify-send', this.notifySend);
+    this.ipc.on('notify-send', (event, args) => {
+      this.notifySend(args);
+    });
+    this.userModel = userManage(this.ipc);
+    this.settingModel = settingManage(this.ipc);
+    this.nodeModel = nodeManage(this.ipc);
   }
 
   // 桌面通知发送 //
