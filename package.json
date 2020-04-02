@@ -19,7 +19,7 @@
     "dist": "npm run start-dll && cross-env NODE_ENV=production webpack --config webpack.prod.config.js",
     "build-before": "mkdir build/ && rm build/* -rf && cp resources/*.* build",
     "build-after": "unzip -qq -o build/*.zip -d build/zip/",
-    "build": "npm run build-before && build -l && npm run build-after",
+    "build": "npm run build-before && build --win && npm run build-after",
     "build-all": "npm run dist && npm run build",
     "publish": "build -p onTag"
   },
@@ -97,5 +97,43 @@
     "webpack": "^4.19.0",
     "webpack-cli": "^3.3.9",
     "webpack-dev-server": "^3.1.8"
+  },
+  "build": {    
+    "productName": "electronux",
+    "appId": "org.datatom.electronux",
+    "asar": false,
+    "copyright": "CopyRight © 2011-2020 上海德拓信息技术股份有限公司",
+    "directories": {
+      "buildResources": "build",
+      "output": "build"
+    },
+    "files":["package.json", "index.js", "dist/", "app/", "node_modules/", "resources/*.*"],
+    "dmg": {
+      "contents": [
+        {
+          "x": 410,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        },
+        {
+          "x": 130,
+          "y": 150,
+          "type": "file"
+        }
+      ]
+    },
+    "mac": {
+      "icon": "build/icon.icns"
+    },
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [
+        "zip"
+      ]
+    },
+    "linux": {
+      "icon": "build/icons"
+    }
   }
 }

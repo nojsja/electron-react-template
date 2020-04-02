@@ -1,7 +1,8 @@
 const fs = require('fs');
 const path = require('path');
+const { app } = require('electron');
 
-const confPath = path.resolve(process.cwd(), 'app/runtime/view.conf');
+const confPath = path.resolve(app.getAppPath(), 'app/runtime/view.conf');
 
 let viewConf = {
   width: null,
