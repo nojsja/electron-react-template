@@ -22,8 +22,8 @@ XHR.interceptors.request.use((request) => {
 
 const ipRequest = (data, api, reqHeaders) => {
   const url = `http://${data._ip}:${api.port}${templateStrTransform(data, api.url)}`;
-  const lang = 'zh_CN';
-  const accessToken = api['access-token'] || '';
+  const lang = ipcMainProcess.sessionController.session.getLang();
+  const accessToken = api['access_token'] || ipcMainProcess.sessionController.session.getAccessToken({host: data._ip});
 
   delete data._ip;
   
@@ -73,10 +73,10 @@ const ipRequest = (data, api, reqHeaders) => {
 };
 
 
-const ipRequestEncoded = (data, api, reqHeaders) => {
+const ipRequestEncoded = (data, api) => {
   const url = `http://${data._ip}:${api.port}${templateStrTransform(data, api.url)}`
-  const lang = 'zh_CN';
-  const accessToken = api['access-token'] || '';
+  const lang = ipcMainProcess.sessionController.session.getLang();
+  const accessToken = api['access_token'] || ipcMainProcess.sessionController.session.getAccessToken({host: data._ip});
 
   delete data._ip;
 

@@ -2,11 +2,15 @@ const electron = require('electron');
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const url = require('url');
-const viewConf = require('../../../app/configure/view-conf');
+const viewConf = require('../../configure/view-conf');
 
 class WindowManagement {
   constructor() {
     this.window = null;
+  }
+
+  sendToWeb(action, params) {
+    this.window.webContents.send(action, params);
   }
 
   // 读取应用设置 //
@@ -47,13 +51,21 @@ class WindowManagement {
     // wait for webpack-dev-server start
       setTimeout(() => {
         this.window.loadURL(url.format({
-          pathname: 'localhost:3000',
+          pathname: '127.0.0.1:8888',
           protocol: 'http:',
           slashes: true,
         }));
-      // window.webContents.openDevTools();
       }, 1e3);
+    } else if (env === 'electron-dev') {
+      // electron develop tmp
+      this.window.loadURL(url.format({
+        pathname: path.resolve(app.getAppPath(), 'app', 'index.html'),
+        protocol: 'file:',
+        slashes: true,
+      }));
+      this.window.webContents.openDevTools();
     } else {
+      // prod
       this.window.loadURL(url.format({
         pathname: path.resolve(app.getAppPath(), 'dist', 'index.html'),
         protocol: 'file:',
@@ -68,15 +80,31 @@ class WindowManagement {
     this.window = new BrowserWindow({
       width,
       height,
+      show: false,
+      center: true,
       minWidth: 800,
       minHeight: 600,
-      title: 'electronux',
+      title: 'RhinoDisk',
       autoHideMenuBar: true,
       icon: path.join(app.getAppPath(), 'resources/icon.png'),
       webPreferences: {
         nodeIntegration: true,
         enableRemoteModule: true,
       },
+    });
+
+    const splash = new BrowserWindow({
+      width, height,
+      transparent: false,
+      frame: false,
+      // alwaysOnTop: true,
+      icon: path.join(app.getAppPath(), 'resources/icon.png'),
+    });
+    splash.loadURL(`file://${path.join(app.getAppPath(), '/resources/loading.splash.html')}`);
+    
+    this.window.once('ready-to-show', () => {
+      splash.destroy();
+      this.window.show();
     });
 
     this.window.on('resize', () => {

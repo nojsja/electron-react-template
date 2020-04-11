@@ -1,13 +1,14 @@
-const low = require('lowdb');
+const low = require('lowdb')
 const path = require('path');
-const FileAsync = require('lowdb/adapters/FileAsync');
 const { app } = require('electron');
-
+const FileAsync = require('lowdb/adapters/FileAsync')
 const adapters = {
   nodes: new FileAsync(path.join(app.getAppPath(), 'app/runtime/database/nodes.json')),
   users: new FileAsync(path.join(app.getAppPath(), 'app/runtime/database/users.json')),
   uploads: new FileAsync(path.join(app.getAppPath(), 'app/runtime/database/uploads.json')),
   setting: new FileAsync(path.join(app.getAppPath(), 'app/runtime/database/setting.json')),
+  cifs: new FileAsync(path.join(app.getAppPath(), 'app/runtime/database/cifs.json')),
+  session: new FileAsync(path.join(app.getAppPath(), 'app/runtime/database/session.json'))
 };
 
 class DataSet {
@@ -30,9 +31,9 @@ class DataSet {
     let data = [];
     if (options) {
       data = this.db
-        .get(selector)
-        .find(options)
-        .value();
+      .get(selector)
+      .find(options)
+      .value();
     } else {
       data = this.db
         .get(selector)
@@ -49,23 +50,24 @@ class DataSet {
 
   assign(selector, options, newData) {
     return this.db.get(selector)
-      .find(options)
-      .assign(newData)
-      .write();
+    .find(options)
+    .assign(newData)
+    .write();
   }
 
   push(selector, data) {
     return this.db.get(selector)
-      .push(data)
-      .write();
+    .push(data)
+    .write();
   }
 
   // 更新一个用户数据，如果不存在则插入
   update(selector, options = {}, data) {
     if (this.get(selector, options)) {
       return this.assign(selector, options, data);
+    } else {
+      return this.push(selector, data);
     }
-    return this.push(selector, data);
   }
 
   // 移除指定的数据项
@@ -78,7 +80,7 @@ class DataSet {
   // 设置条目
   setNumber(selector, fn) {
     return this.db.update(selector, fn)
-      .write();
+    .write();
   }
 }
 

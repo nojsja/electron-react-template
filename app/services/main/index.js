@@ -6,24 +6,23 @@ const path = require('path');
 const fs = require('fs');
 
 const { notifySend } = require('../../utils/utils');
-const userManage = require('./userManage');
+
 const settingManage = require('./settingManage');
-const nodeManage = require('./nodeManage');
+const SessionManage = require('../../controller/SessionManage');
 
 class IpcMainProcess {
   constructor(ipc) {
     this.ipc = ipc;
-    this.ipc.on('notify-send', (event, args) => {
+    this.sessionController = new SessionManage(this.ipc);
+    this.settingModel = settingManage(this.ipc, this.sessionController);
+    this.ipc.on('notify-send', function(event, args) {
       this.notifySend(args);
     });
-    this.userModel = userManage(this.ipc);
-    this.settingModel = settingManage(this.ipc);
-    this.nodeModel = nodeManage(this.ipc);
   }
 
   // 桌面通知发送 //
-  notifySend(event = {}, args = {}) {
-    const iconAddr = args.icon || 'resources/public/electronux.png';
+  notifySend(args = {}) {
+    const iconAddr = args.icon || 'resources/icon.png';
     notifySend({
       delay: args.delay || 0,
       title: args.title || 'electron',

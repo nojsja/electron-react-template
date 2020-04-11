@@ -1,8 +1,7 @@
-### electronux
+### electron开发说明
 --------------
-Build for Manjaro linux 17 desktop -- [ startup configure | software installer | system cleaner | check running state ]. Powered by Electron v3, React v16, Node v8, Mobx v4, Webpack v4, shell scripts.
 
-#### commands
+#### 命令
 * 【npm run start】 -- start webpack-dev-server and electron together(only show electron log info).
 * 【npm run start-dll】 -- dll the static library with webpack.
 * 【npm run start-dev】 -- start webpack-dev-server.
@@ -15,13 +14,30 @@ Build for Manjaro linux 17 desktop -- [ startup configure | software installer |
 * 【npm run build-all】 -- build application after run `npm run dist`.
 * 【npm publish】 -- publish to github.
 
-#### screenshots
-----------------
-![install_list](resources/screenshots/install_list.png)
-![install_permission](resources/screenshots/install_permission.png)
-![install_detail](resources/screenshots/install_detail.png)
-![electron_password](resources/screenshots/electron_password.png)
-![clean_detail](resources/screenshots/clean_detail.png)
-![clean_search](resources/screenshots/clean_search.png)
-![startup_list](resources/screenshots/startup_list.png)
-![info_total](resources/screenshots/info_total.png)
+### 说明
+1. 环境安装  
+>切换镜像源让Electron安装更快
+```sh
+$: npm config set electron_mirror http://npm.taobao.org/mirrors/electron/
+$: npm config set electron_custom_dir "8.2.0"
+$: npm install
+$: npm install electron@8.2.0 -g
+$: npm install cross-env -g
+```
+
+2. electron-dev环境
+* 手动重启说明
+>开启后可以在控制台手动输入`rs`然后敲击Enter重启开发环境
+* 自动重启说明
+>`package.json`文件的`nodemonConfig.ignore`字段过滤了用于监听代码变化自动加载的文件，`app/*`表示app目录下的所有文件被取消监听，开发者可以根据个人习惯更改监听的文件列表
+* 自动重启报错解决  
+>如果遇到控制台报错`Nodemon Error: System limit for number of file watchers reached`，请在终端输入以下命令取消系统文件监听限制
+```sh
+$: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+```
+
+3. electron-builder打包说明
+
+* [参考链接](https://zhuanlan.zhihu.com/p/110448415)
+* 首次运行打包需要下载环境相关的文件，win环境下会遇到下载卡住的问题，请将命令行下载卡住的文件复制链接手动下载，然后进入目录
+`C:\Users\\[username]\AppData\Local\electron-builder\Cache\winCodeSign`（注意：username是你自己的用户名，如果Cache目录里没有winCodeSign目录请自己新建此目录），并根据winCodeSign版本新建文件夹比如`winCodeSign-2.6.0`，将下载的文件解压到此目录即可，最后重新运行build命令进行打包。

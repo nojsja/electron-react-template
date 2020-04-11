@@ -98,7 +98,7 @@
     "webpack-cli": "^3.3.9",
     "webpack-dev-server": "^3.1.8"
   },
-  "build": {    
+  "build": {
     "productName": "electronux",
     "appId": "org.datatom.electronux",
     "asar": false,
@@ -107,33 +107,55 @@
       "buildResources": "build",
       "output": "build"
     },
-    "files":["package.json", "index.js", "dist/", "app/", "node_modules/", "resources/*.*"],
-    "dmg": {
-      "contents": [
-        {
-          "x": 410,
-          "y": 150,
-          "type": "link",
-          "path": "/Applications"
-        },
-        {
-          "x": 130,
-          "y": 150,
-          "type": "file"
-        }
-      ]
-    },
+    "files": [
+      "package.json",
+      "index.js",
+      "dist/",
+      "app/",
+      "node_modules/",
+      "resources/*.*"
+    ],
     "mac": {
       "icon": "build/icon.icns"
+    },
+    "linux": {
+      "icon": "build/icon.png",
+      "target": [
+        {
+          "target": "snap"
+        },
+        {
+          "target": "zip"
+        }
+      ]
     },
     "win": {
       "icon": "build/icon.ico",
       "target": [
-        "zip"
+        {
+          "target": "zip"
+        },
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
       ]
     },
-    "linux": {
-      "icon": "build/icons"
+    "nsis": {
+      "oneClick": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "./build/cloud.ico",
+      "uninstallerIcon": "./build/cloud.ico",
+      "installerHeaderIcon": "./build/cloud.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "RhinoDisk"
+    },
+    "snap": {
+      "desktop": "RhinoDisk"
     }
   }
 }

@@ -6,7 +6,7 @@ const path = require('path');
  * @return {[type]} [description]
  */
 function writeFile(confPath, data, isJson) {
-  data =  isJson ? JSON.stringify(data) : data;
+  data = isJson ? JSON.stringify(data) : data;
   return new Promise((resolve, reject) => {
     try {
       fs.writeFile(confPath, data, 'utf8', (err) => {
@@ -28,7 +28,7 @@ function writeFile(confPath, data, isJson) {
  * @return {[type]} [description]
  */
 function writeFileSync(confPath, data, isJson) {
-  data =  isJson ? JSON.stringify(data) : data;
+  data = isJson ? JSON.stringify(data) : data;
   console.log('write sync');
   fs.writeFileSync(confPath, data, 'utf8');
 }
