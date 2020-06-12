@@ -8,8 +8,7 @@ const { app } = require('electron');
  * session.lang -- 在session里保存一份语言数据标识，防止用户cookie丢失时语言设置失效(session 持久化)
  * cookie.lang -- 保存在客户端的语言数据标识，session.lang和cookie.lang保持同步
  */
-const lang =  (function() {
-
+const lang = (function lang() {
   const defaultLang = 'zh_CN';
 
   /* ------------------- 获取统一的语言环境标识 ------------------- */
@@ -21,15 +20,12 @@ const lang =  (function() {
     // 中文简体
     if (['zh-CN', 'zh', 'zh-cn', 'zh_cn', 'zh_CN'].indexOf(acceptLang) !== -1) {
       return 'zh_cn';
-    }else
-    // 中文繁体
-    if (['zh-TW', 'zh-tw', 'zh_tw', 'zh_TW'].indexOf(acceptLang) !== -1) {
+    } if (['zh-TW', 'zh-tw', 'zh_tw', 'zh_TW'].indexOf(acceptLang) !== -1) {
       return 'zh_tw';
     // 默认中文简体
-    }else {
-      return 'zh_cn';
     }
-  }
+    return 'zh_cn';
+  };
 
   /* ------------------- 加载语言文件 ------------------- */
   const setLang = (langEnv) => {
@@ -46,17 +42,16 @@ const lang =  (function() {
         global.lang[file.replace('.js', '')] = require(path.join(app.getAppPath(), 'app/lang', langEnv, file));
       });
     });
-  }
+  };
 
-  return function (acceptLang) {
+  return (acceptLang) => {
     const _lang = getLANG(acceptLang || defaultLang);
-    if (global['LANG'] && global['LANG'] == _lang) {
+    if (global.LANG && global.LANG == _lang) {
       return;
     }
     // 设置目前的语言环境
     setLang(_lang);
-  }
-
-})();
+  };
+}());
 
 module.exports = lang;

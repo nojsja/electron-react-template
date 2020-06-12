@@ -14,28 +14,24 @@ const XHR = axios.create({
   },
 });
 
-XHR.interceptors.request.use((request) => {
-  return request;
-}, (error) => {
-  return error;
-});
+XHR.interceptors.request.use(request => request, error => error);
 
 const ipRequest = (data, api, reqHeaders) => {
   const url = `http://${data._ip}:${api.port}${templateStrTransform(data, api.url)}`;
   const lang = ipcMainProcess.sessionController.session.getLang();
-  const accessToken = api['access_token'] || ipcMainProcess.sessionController.session.getAccessToken({host: data._ip});
+  const accessToken = api.access_token || ipcMainProcess.sessionController.session.getAccessToken({ host: data._ip });
 
   delete data._ip;
-  
+
   if (api.method === 'get') {
     return new Promise((resolve, reject) => {
       axios.get(url, {
         params: data,
         headers: {
-          ...{ "cookie": "" },
-          ...( { "access-token": accessToken } ),
-          "lang": lang,
-          "LANG": lang,
+          ...{ cookie: '' },
+          ...({ 'access-token': accessToken }),
+          lang,
+          LANG: lang,
         },
       }).then((response) => {
         resolve(response.data);
@@ -43,40 +39,39 @@ const ipRequest = (data, api, reqHeaders) => {
         const obj = {
           code: error.code,
           config: error.config,
-        }
-        resolve(obj);
-      });
-    });
-  } else {
-    return new Promise((resolve, reject) => {
-      XHR({
-        url: url,
-        method: api.method,
-        data,
-        headers: {
-          ...{ "cookie": "" },
-          ...{ "access-token": accessToken },
-          "lang": lang,
-          "LANG": lang,
-        },
-      }).then((response) => {
-        resolve(response.data);
-      }).catch((error) => {
-        const obj = {
-          code: error.code,
-          config: error.config,
-        }
+        };
         resolve(obj);
       });
     });
   }
+  return new Promise((resolve, reject) => {
+    XHR({
+      url,
+      method: api.method,
+      data,
+      headers: {
+        ...{ cookie: '' },
+        ...{ 'access-token': accessToken },
+        lang,
+        LANG: lang,
+      },
+    }).then((response) => {
+      resolve(response.data);
+    }).catch((error) => {
+      const obj = {
+        code: error.code,
+        config: error.config,
+      };
+      resolve(obj);
+    });
+  });
 };
 
 
 const ipRequestEncoded = (data, api) => {
-  const url = `http://${data._ip}:${api.port}${templateStrTransform(data, api.url)}`
+  const url = `http://${data._ip}:${api.port}${templateStrTransform(data, api.url)}`;
   const lang = ipcMainProcess.sessionController.session.getLang();
-  const accessToken = api['access_token'] || ipcMainProcess.sessionController.session.getAccessToken({host: data._ip});
+  const accessToken = api.access_token || ipcMainProcess.sessionController.session.getAccessToken({ host: data._ip });
 
   delete data._ip;
 
@@ -85,10 +80,10 @@ const ipRequestEncoded = (data, api) => {
       axios.get(url, {
         params: data,
         headers: {
-          ...{ "cookie": "" },
-          ...( { "access-token": accessToken } ),
-          "lang": lang,
-          "LANG": lang,
+          ...{ cookie: '' },
+          ...({ 'access-token': accessToken }),
+          lang,
+          LANG: lang,
         },
       }).then((response) => {
         resolve(response.data);
@@ -96,36 +91,35 @@ const ipRequestEncoded = (data, api) => {
         const obj = {
           code: error.code,
           config: error.config,
-        }
-        resolve(obj);
-      });
-    });
-  } else {
-    return new Promise((resolve, reject) => {
-      XHR({
-        url: url,
-        method: api.method,
-        data: qs.stringify(data),
-        headers: {
-          ...{
-            "cookie": "",
-            "content-type": 'application/x-www-form-urlencoded',
-          },
-          ...{ "access-token": accessToken },
-          "lang": lang,
-          "LANG": lang,
-        },
-      }).then((response) => {
-        resolve(response.data);
-      }).catch((error) => {
-        const obj = {
-          code: error.code,
-          config: error.config,
-        }
+        };
         resolve(obj);
       });
     });
   }
+  return new Promise((resolve, reject) => {
+    XHR({
+      url,
+      method: api.method,
+      data: qs.stringify(data),
+      headers: {
+        ...{
+          cookie: '',
+          'content-type': 'application/x-www-form-urlencoded',
+        },
+        ...{ 'access-token': accessToken },
+        lang,
+        LANG: lang,
+      },
+    }).then((response) => {
+      resolve(response.data);
+    }).catch((error) => {
+      const obj = {
+        code: error.code,
+        config: error.config,
+      };
+      resolve(obj);
+    });
+  });
 };
 
 exports.ipRequest = ipRequest;

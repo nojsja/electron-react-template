@@ -6,18 +6,20 @@
 const child = require('child_process');
 const fs = require('fs');
 const path = require('path');
-const inPath = require(path.join(__dirname, 'in-path'));
+const iconvLite = require('iconv-lite');
 const { ipcMain } = require('electron');
+const inPath = require('./in-path');
 
 class SudoPrompt {
   constructor() {
     this.bins = [
       '/usr/bin/pkexec',
       '/usr/bin/gksu',
+      'C:/Windows/System32/cmd.exe',
     ];
     this.bin = null;
     this.password = null;
-    this.passwordFile = path.join(__dirname, '../', 'runtime/password.conf');
+    this.passwordFile = path.join(pathRuntime, 'password.conf');
   }
 
   // 识别系统权限弹窗获取程序 //
@@ -70,20 +72,22 @@ class SudoPrompt {
    * @param  { [Object] }  options [exec可定制的参数]
    * @return { Promise }           [返回Promise对象]
    */
-  async exec(_command, _params, _options) {
+  async exec(_command, _params = [], _options = {}) {
     const self = this;
-    self.getBin();
     const params = Array.isArray(_params) ? _params.join(' ') : _params;
     const options = (typeof (_options) === 'object') ? _options : {};
-    const command = `${self.bin} ${_command} ${params}`;
+    const command = `${_command} ${params}`;
+
+    console.log(params, options, command);
 
     return new Promise(async (resolve, reject) => {
-      child.exec(command, options, (_err, _stdout, _stderr) => {
-        if (_err || _stderr) {
-          const err = !_err ? _stderr : _err;
-          reject(err);
+      child.exec(command, { ...options, encoding: 'buffer' }, (_err, _stdout, _stderr) => {
+        if (_err) {
+          reject(_err);
+        } else if (_stderr && _stderr.toString()) {
+          reject(iconvLite.decode(_stderr, 'cp936'));
         } else {
-          resolve(_stdout);
+          resolve(iconvLite.decode(_stdout, 'cp936'));
         }
       });
     });

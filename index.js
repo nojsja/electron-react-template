@@ -8,11 +8,14 @@ const requireLang = require('./app/lang');
 const IpcMainClass = require('./app/services/main/');
 const IpcMaiWindowClass = require('./app/services/main/windowManage');
 const { readFileSync } = require('./app/utils/write-file');
-
+const { checkEnvFiles } = require('./app/utils/utils');
 
 /* ------------------- var ------------------- */
 const nodeEnv = process.env.NODE_ENV;
 global.nodeEnv = process.env.NODE_ENV;
+// 检查环境
+global.pathRuntime = checkEnvFiles().pathRuntime;
+
 
 /* ------------------- middleware ------------------- */
 const { result, error } = readFileSync(path.join(app.getAppPath(), 'app/runtime/database/setting.json'), true);
