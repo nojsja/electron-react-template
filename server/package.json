@@ -15,7 +15,6 @@
     "start-electron": "cross-env NODE_ENV=development nodemon --exec 'electron --inspect=5858 index'",
     "start-production": "cross-env NODE_ENV=production electron --inspect=5858 index",
     "build-win": "electron-builder --win",
-    "build-win-h": "electron-builder --win",
     "build-linux": "electron-builder --linux",
     "build-mac": "electron-builder --mac",
     "build-all": "npm run build-win && npm run build-mac"

@@ -11,7 +11,7 @@
     "email": "yangwei020154@gmail.com"
   },
   "scripts": {
-    "start": "concurrently \"npm run start-dev\"",
+    "start": "npm run start-dev",
     "start-dll": "cross-env NODE_ENV=development webpack --config webpack.dll.config.js",
     "start-dev": "npm run start-dll && cross-env NODE_ENV=development webpack-dev-server",
     "build": "npm run start-dll && cross-env NODE_ENV=production webpack --config webpack.prod.config.js"

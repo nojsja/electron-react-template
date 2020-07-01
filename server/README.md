@@ -1,18 +1,14 @@
-### electron开发说明
+### server开发说明
 --------------
 
 #### 命令
-* 【npm run start】 -- start webpack-dev-server and electron together(only show electron log info).
-* 【npm run start-dll】 -- dll the static library with webpack.
-* 【npm run start-dev】 -- start webpack-dev-server.
-* 【npm run start-electron】 -- start electron main process(GUI) and load localhost:3000 (http).
+* 【npm start】 -- run electron-dev.
+* 【npm run start-electron】 -- start electron main process(GUI) and load localhost:8080 (http).
 * 【npm run start-production】 -- start electron main process(GUI) and load dist resources (local).
-* 【npm run dist】 -- compile and package the frontend resources.
-* 【npm run build-before】 -- the pre steps before build application.
-* 【npm run build-after】 -- the next steps after build application.
-* 【npm run build】 -- build application using dist resources.
-* 【npm run build-all】 -- build application after run `npm run dist`.
-* 【npm publish】 -- publish to github.
+* 【npm run build-win】 -- build application for windows using dist resources.
+* 【npm run build-linux】 -- build application for linux using dist resources.
+* 【npm run build-mac】 -- build application for mac using dist resources.
+* 【npm run build-all】 -- build application for all platforms using dist resources.
 
 ### 说明
 1. 环境安装  
