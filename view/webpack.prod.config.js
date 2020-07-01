@@ -4,8 +4,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 // 拆分样式文件
-const extractSass = new ExtractTextPlugin({
-  filename: 'style.scss.css',
+const extractLess = new ExtractTextPlugin({
+  filename: 'style.less.css',
 });
 
 const extractCss = new ExtractTextPlugin({
@@ -49,12 +49,12 @@ module.exports = {
         }),
       },
       {
-        test: /\.scss$/,
-        use: extractSass.extract({
+        test: /\.less$/,
+        use: extractLess.extract({
           use: [{
             loader: 'css-loader',
           }, {
-            loader: 'sass-loader',
+            loader: 'less-loader',
           }],
           fallback: 'style-loader', // 在开发环境使用 style-loader
           publicPath: path.join(__dirname, 'dist/'),
@@ -95,7 +95,7 @@ module.exports = {
 
   plugins: [
     dllRefPlugin,
-    extractSass,
+    extractLess,
     extractCss,
     new webpack.NamedModulesPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),

@@ -7,6 +7,10 @@ const extractCss = new ExtractTextPlugin({
   filename: 'style.css',
 });
 
+const extractLess = new ExtractTextPlugin({
+  filename: 'style.less.css',
+});
+
 module.exports = {
   devtool: 'source-map',
   entry: [
@@ -43,16 +47,14 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        use: ExtractTextPlugin.extract({
-          publicPath: '/',
+        use: extractLess.extract({
           use: [{
             loader: 'css-loader',
-          },
-          {
+          }, {
             loader: 'less-loader',
-          },
-          ],
-          fallback: 'style-loader',
+          }],
+          fallback: 'style-loader', // 在开发环境使用 style-loader
+          publicPath: path.join(__dirname, 'dist/'),
         }),
       },
       {
@@ -77,6 +79,7 @@ module.exports = {
 
   plugins: [
     extractCss,
+    extractLess,
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),

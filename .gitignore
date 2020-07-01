@@ -1,5 +1,6 @@
-node_modules
-out
-build
+**/node_modules
+server/build
+**/dist
 .eslintcache
 .ftpconfig
+**/.vscode
