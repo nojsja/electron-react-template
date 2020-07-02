@@ -1,4 +1,8 @@
 const _public = {
+  OK: 'OK',
+  Cancel: 'Cancel',
+  tips: 'Tips',
+  quit: 'Quit',
   now_lang: 'English',
   request_error: 'Operation Error',
   connect_to_cluster_failed: 'Failed to connect to the cluster!',
@@ -18,6 +22,8 @@ const _public = {
   login_reject_tips_role_1: 'The auditor is not allowed to log in to the client!',
   login_reject_tips_role_2: 'Super administrators are not allowed to log in to the client!',
   logout_failed: 'Logout failed',
+  function_has_not_been_adapted: 'The current function has not been adapted!',
+  data_write_failed_before_quit: 'Data writing failed before the application exited!',
 }
 
 module.exports = _public;

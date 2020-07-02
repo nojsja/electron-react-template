@@ -18,8 +18,8 @@ const func = {
   /* web build */
   'web-dist': async () => {
     console_log('>>>>>> web-dist ...');
-    await execRealtime('git pull', [], { cwd: './view' })
-    .then(() => execRealtime('npm run build', [], { cwd: './view' }))
+    await execRealtime('git pull', { cwd: './view' })
+    .then(() => execRealtime('npm run build', { cwd: './view' }))
     .then(() => {
       if (fs.existsSync('./server/dist')) {
         fs.rmdirSync('./server/dist', { recursive: true });
@@ -31,22 +31,30 @@ const func = {
   /* build for win platform */
   'build-win': async (env) => {
     await func['web-dist']();
-    await execRealtime(`node ./build.js build-win ${env}`, [], { cwd: './server' });
+    await execRealtime(`node ./build.js build-win ${env}`, { cwd: './server' });
   },
   /* build for linux platform */
   'build-linux': async (env) => {
     await func['web-dist']();
-    await execRealtime(`node ./build.js build-linux ${env}`, [], { cwd: './server' });
+    await execRealtime(`node ./build.js build-linux ${env}`, { cwd: './server' });
   },
   /* build for mac platform */
   'build-mac': async (env) => {
     await func['web-dist']();
-    await execRealtime(`node ./build.js build-mac ${env}`, [], { cwd: './server' });
+    await execRealtime(`node ./build.js build-mac ${env}`, { cwd: './server' });
   },
   /* build for all platform */
   'build-all': async (env) => {
     await func['web-dist']();
-    await execRealtime(`node ./build.js build-all ${env}`, [], { cwd: './server' });
+    await execRealtime(`node ./build.js build-all ${env}`, { cwd: './server' });
+  },
+  'clean-build': async (env) => {
+    await execRealtime('node ./build.js clean-build', { cwd: './server' });
+    if (fs.existsSync('./view/dist')) {
+      fs.rmdirSync('./view/dist', { recursive: true });
+    }
+    await execRealtime('git checkout -- dist', { cwd: './view' });
+    console_log(`\nclean finishied!`);
   },
   /* build command usage */
   '--help': () => {
@@ -61,6 +69,7 @@ const func = {
     |______ param: [build-linux ] [--edit | --office] => build package for linux, the default conf file is ./server/config.json\n\
     |______ param: [build-mac   ] [--edit | --office] => build package for mac, the default conf file is ./server/config.json\n\
     |______ param: [build-all   ] [--edit | --office] => build package for all platform, the default conf file is ./server/config.json\n\
+    |______ param: [clean-build ] => clean build directory after build\n\
     |\n\
     |______ example1: node build.js build-win\n\
     |______ example2: node build.js build-linux\n\
@@ -69,6 +78,7 @@ const func = {
     |______ example5: node build.js build-win --edit\n\
     |______ example6: node build.js build-win --office\n\
     |______ example7: node build.js --help\n\
+    |______ example8: node build.js clean-build\n\
     \n\
     ')
   },

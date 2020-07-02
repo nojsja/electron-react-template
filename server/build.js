@@ -75,6 +75,18 @@ class Builder {
     copyDirSync('./resources', './build');
   }
 
+  /* 打包后清理环境 */
+  static async cleanBuild() {
+    if (fs.existsSync('./build')) {
+      fs.rmdirSync('./build', { recursive: true });
+    }
+    if (fs.existsSync('./dist')) {
+      fs.rmdirSync('./dist', { recursive: true });
+    }
+    await execRealtime('git checkout -- ./build');
+    await execRealtime('git checkout -- ./dist');
+  }
+
   /* 按照平台打包 */
   async build() {
     console_log('>>>>>> set env conf ...');
@@ -108,6 +120,7 @@ class Builder {
     |______ param: [build-linux ] [--edit | --office] => build package for linux, the default conf file is ./config.json\n\
     |______ param: [build-mac   ] [--edit | --office] => build package for mac, the default conf file is ./config.json\n\
     |______ param: [build-all   ] [--edit | --office] => build package for all platform, the default conf file is ./config.json\n\
+    |______ param: [clean-build ] => clean build directory after build\n\
     |\n\
     |______ example1: node build.js build-win\n\
     |______ example2: node build.js build-linux\n\
@@ -116,6 +129,7 @@ class Builder {
     |______ example5: node build.js build-win --edit\n\
     |______ example6: node build.js build-win --office\n\
     |______ example7: node build.js --help\n\
+    |______ example8: node build.js clean-build\n\
     \n\
     ')
   }
@@ -143,6 +157,9 @@ function Main() {
       case 'build-all':
         const allBuilder = new Builder('all', params.length ? params.shift() : '');
         allBuilder.build();
+        break;
+      case 'clean-build':
+        Builder.cleanBuild();
         break;
       case '--help':
         Builder.help();

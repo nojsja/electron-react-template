@@ -1,4 +1,8 @@
 const _public = {
+  OK: '确定',
+  Cancel: '取消',
+  tips: '小提示',
+  quit: '退出',
   now_lang: '简体中文',
   request_error: '操作异常',
   connect_to_cluster_failed: '连接集群失败！',
@@ -18,6 +22,7 @@ const _public = {
   login_reject_tips_role_1: '审计员不允许登录客户端！',
   login_reject_tips_role_2: '超级管理员不允许登录客户端！',
   logout_failed: '登出失败',
+  data_write_failed_before_quit: '应用程序退出前数据写入失败！',
 }
 
 module.exports = _public;

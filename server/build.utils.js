@@ -3,7 +3,6 @@ const path = require('path');
 const child = require('child_process');
 
 const compressing = require('compressing');
-const { captureRejectionSymbol } = require('events');
 
 /*
 * 复制目录、子目录，及其中的文件
@@ -40,8 +39,8 @@ exports.copyDirSync = (src, dist) => {
    * @return { Promise }           [返回Promise对象]
    */
 exports.exec = (_command, _params=[], _options={}) => {
-  const params = Array.isArray(_params) ? _params.join(' ') : _params;
-  const options = (typeof (_options) === 'object') ? _options : {};
+  const params = Array.isArray(_params) ? _params.join(' ') : '';
+  const options = (String(_params) === '[object Object]') ? _params : (_options);
   const command = `${_command} ${params}`;
   
   console.log(params, options, command);
@@ -70,8 +69,8 @@ exports.exec = (_command, _params=[], _options={}) => {
    * @return { Promise }           [返回Promise对象]
    */
   exports.execRealtime = (_command, _params=[], _options={}) => {
-    const params = Array.isArray(_params) ? _params.join(' ') : _params;
-    const options = (typeof (_options) === 'object') ? _options : {};
+    const params = Array.isArray(_params) ? _params.join(' ') : '';
+    const options = (String(_params) === '[object Object]') ? _params : (_options);
     const command = `${_command} ${params}`;
     let data = '', error = '';
     

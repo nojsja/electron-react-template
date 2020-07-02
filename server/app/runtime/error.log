@@ -1,14 +1,5 @@
-Error: Cannot find module 'source-map-support'
-Require stack:
-- E:\Ubuntu18.04\github\electron-react-template\server\index.js
-- E:\Ubuntu18.04\github\electron-react-template\server\node_modules\electron\dist\resources\default_app.asar\main.js
-- 
-    at Module._resolveFilename (internal/modules/cjs/loader.js:798:15)
-    at Function../lib/common/reset-search-paths.ts.Module._resolveFilename (electron/js2c/browser_init.js:7607:16)
-    at Module._load (internal/modules/cjs/loader.js:691:27)
-    at Module._load (electron/js2c/asar.js:717:26)
-    at Function.Module._load (electron/js2c/asar.js:717:26)
-    at Module.require (internal/modules/cjs/loader.js:853:19)
-    at require (internal/modules/cjs/helpers.js:74:18)
-    at App.<anonymous> (E:\Ubuntu18.04\github\electron-react-template\server\index.js:34:5)
+TypeError: Cannot read property 'quit' of undefined
+    at WindowManagement.contextMenu (E:\Ubuntu18.04\github\electron-react-template\server\app\services\main\windowManage.js:83:37)
+    at WindowManagement.createWindow (E:\Ubuntu18.04\github\electron-react-template\server\app\services\main\windowManage.js:193:12)
+    at App.<anonymous> (E:\Ubuntu18.04\github\electron-react-template\server\index.js:36:24)
     at App.emit (events.js:215:7)
