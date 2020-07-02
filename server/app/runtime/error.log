@@ -1,0 +1,5 @@
+TypeError: Cannot read property 'quit' of undefined
+    at WindowManagement.contextMenu (E:\Ubuntu18.04\github\electron-react-template\server\app\services\main\windowManage.js:83:37)
+    at WindowManagement.createWindow (E:\Ubuntu18.04\github\electron-react-template\server\app\services\main\windowManage.js:193:12)
+    at App.<anonymous> (E:\Ubuntu18.04\github\electron-react-template\server\index.js:36:24)
+    at App.emit (events.js:215:7)
