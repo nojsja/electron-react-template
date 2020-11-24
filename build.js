@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-const { copyDirSync, exec, execRealtime, console_log } = require('./server/build.utils');
+const { copyDirSync, exec, execRealtime, console_log } = require('./service/build.utils');
 const console = require('console');
 
 /*
@@ -14,7 +14,7 @@ const console = require('console');
    */
 const func = {
   'test': () => {
-    copyDirSync('./view/dist', './server/dist');
+    copyDirSync('./view/dist', './service/dist');
   },
   /* web build */
   'web-dist': async () => {
@@ -22,35 +22,35 @@ const func = {
     await execRealtime('git pull', { cwd: './view' })
     .then(() => execRealtime('npm run build', { cwd: './view' }))
     .then(() => {
-      if (fs.existsSync('./server/dist')) {
-        fs.rmdirSync('./server/dist', { recursive: true });
+      if (fs.existsSync('./service/dist')) {
+        fs.rmdirSync('./service/dist', { recursive: true });
       }
-      fs.mkdirSync('./server/dist');
-      copyDirSync('./view/dist', './server/dist');
+      fs.mkdirSync('./service/dist');
+      copyDirSync('./view/dist', './service/dist');
     });
   },
   /* build for win platform */
   'build-win': async (env) => {
     await func['web-dist']();
-    await execRealtime(`node ./build.js build-win ${env || ''}`, { cwd: './server' });
+    await execRealtime(`node ./build.js build-win ${env || ''}`, { cwd: './service' });
   },
   /* build for linux platform */
   'build-linux': async (env) => {
     await func['web-dist']();
-    await execRealtime(`node ./build.js build-linux ${env || ''}`, { cwd: './server' });
+    await execRealtime(`node ./build.js build-linux ${env || ''}`, { cwd: './service' });
   },
   /* build for mac platform */
   'build-mac': async (env) => {
     await func['web-dist']();
-    await execRealtime(`node ./build.js build-mac ${env || ''}`, { cwd: './server' });
+    await execRealtime(`node ./build.js build-mac ${env || ''}`, { cwd: './service' });
   },
   /* build for all platform */
   'build-all': async (env) => {
     await func['web-dist']();
-    await execRealtime(`node ./build.js build-all ${env || ''}`, { cwd: './server' });
+    await execRealtime(`node ./build.js build-all ${env || ''}`, { cwd: './service' });
   },
   'clean-build': async (env) => {
-    await execRealtime('node ./build.js clean-build', { cwd: './server' });
+    await execRealtime('node ./build.js clean-build', { cwd: './service' });
     if (fs.existsSync('./view/dist')) {
       fs.rmdirSync('./view/dist', { recursive: true });
     }
@@ -66,10 +66,10 @@ const func = {
     |\n\
     |\n\
     |______ param: [--help | -h ] => show usage info.\n\
-    |______ param: [build-win   ] [--edit | --office] => build package for windows, the default conf file is ./server/config.json.\n\
-    |______ param: [build-linux ] [--edit | --office] => build package for linux, the default conf file is ./server/config.json\n\
-    |______ param: [build-mac   ] [--edit | --office] => build package for mac, the default conf file is ./server/config.json\n\
-    |______ param: [build-all   ] [--edit | --office] => build package for all platform, the default conf file is ./server/config.json\n\
+    |______ param: [build-win   ] [--edit | --office] => build package for windows, the default conf file is ./service/config.json.\n\
+    |______ param: [build-linux ] [--edit | --office] => build package for linux, the default conf file is ./service/config.json\n\
+    |______ param: [build-mac   ] [--edit | --office] => build package for mac, the default conf file is ./service/config.json\n\
+    |______ param: [build-all   ] [--edit | --office] => build package for all platform, the default conf file is ./service/config.json\n\
     |______ param: [clean-build ] => clean build directory after build\n\
     |\n\
     |______ example1: node build.js build-win\n\

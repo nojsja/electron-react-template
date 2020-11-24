@@ -1,52 +1,89 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import { Menu, Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import {
-  Route, BrowserRouter as Router, Link,
-} from 'react-router';
+import { Button } from 'antd';
 
-// 批量引入所有图片(可以指定所有图片类型)
-// const requireContext = require.context('resources/install', true, /^\.\/.*\.(jpg|png)$/);
-const requireContext = require.context('resources/', true, /.*/);
-requireContext.keys().map(requireContext);
+import RouteWithSubRoutes from 'router/RouteWithSubRoutes';
+
+import { history } from 'app/App';
+
+import EditableTree from 'components/EditableTree/index.jsx';
+
+const treeData = [
+  {
+    nodeName: '出版者',
+    id: '出版者',
+    nameEditable: true,
+    valueEditable: true,
+    nodeValue: [
+      {
+        nodeName: '出版者描述',
+        isInEdit: true,
+        nameEditable: true,
+        valueEditable: true,
+        id: '出版者描述',
+        nodeValue: [
+          {
+            nodeName: '出版者名称',
+            id: '出版者名称',
+            nameEditable: true,
+            valueEditable: true,
+            nodeValue: '出版者A',
+          },
+          {
+            nodeName: '出版者地',
+            id: '出版者地',
+            nameEditable: true,
+            valueEditable: true,
+            nodeValue: '出版地B1',
+          },
+        ],
+      }
+    ],
+  },
+];
 
 @inject('pub') @observer
 class HomePage extends Component {
   static propTypes = {
-
+    pub: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired,
   }
 
   constructor(props) {
     super(props);
     this.state = {
     };
-    this.lastActiveItem = null;
   }
 
-  /* ------------------- react event ------------------- */
-
-
-  componentDidMount() {
+  onDataChange = (data) => {
+    console.log(`tree changed: `, data);
   }
 
-  componentWillUnmount() {
-
+  push = () => {
+    history.push('/page1');
   }
-
-  /* ------------------- page event ------------------- */
-
-  /* ------------------- page render ------------------- */
 
   render() {
-    const { match, children } = this.props;
+    const { match, routes } = this.props;
+
     return (
       <div className="container-router">
-        HomePage
         <p>
-          <Link to="/startup">startup</Link>
+          <Button onClick={this.push}>redirect to SemanticTree</Button>
         </p>
-        { children }
+        <EditableTree
+          data={treeData}
+          maxLevel={10}
+          pub={this.props.pub}
+          onDataChange={this.onDataChange}
+        />
+         {
+            routes && routes.map((route, i) => 
+              <RouteWithSubRoutes key={`${route.path}_${i}`} route={route}/>
+            )
+          }
       </div>
     );
   }

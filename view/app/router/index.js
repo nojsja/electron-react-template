@@ -1,16 +1,16 @@
-import HomePage from 'app/views/HomePage.js';
-import StartupPage from 'app/views/startup/StartupPage';
+import Page1 from '../views/page1/index.jsx';
+import HomePage from '../views/HomePage';
 
-export default [
+const routes = 
   {
-    path: '/',
+    path: "/",
     component: HomePage,
-    // indexRoute: { component: StartupPage },
-    childRoutes: [
+    routes: [
       {
-        path: 'startup',
-        component: StartupPage,
+        path: "/page1",
+        component: Page1,
       },
-    ],
-  },
-];
+    ]
+  };
+
+export default routes;

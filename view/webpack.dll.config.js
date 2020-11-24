@@ -11,8 +11,7 @@ module.exports = {
       'react-router',
       'mobx',
       'mobx-react',
-      'semantic-ui-react',
-      'semantic-ui-css',
+      'antd'
     ],
   },
   mode: 'development',
@@ -27,6 +26,9 @@ module.exports = {
     alias: {
       resources: path.resolve(__dirname, 'resources'),
       app: path.resolve(__dirname, 'app'),
+      utils: path.resolve(__dirname, 'app/utils'),
+      components: path.resolve(__dirname, 'app/components'),
+      router: path.resolve(__dirname, 'app/router'),
     },
   },
 
@@ -34,7 +36,7 @@ module.exports = {
     new webpack.DllPlugin({ // DllPlugin的name属性需要和libary保持一致
       name: '[name]_[hash]',
       path: path.join(__dirname, 'dist', '[name]-manifest.json'),
-      context: __dirname,
+      context: path.join(__dirname),
     }),
   ],
 };

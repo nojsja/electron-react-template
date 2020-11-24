@@ -15,30 +15,50 @@ const extractCss = new ExtractTextPlugin({
 // 拆分静态库
 const dllRefPlugin = new webpack.DllReferencePlugin({
   context: __dirname,
-  manifest: require('./dist/vendor-manifest.json'),
+  manifest: require(path.resolve('dist/vendor-manifest.json')),
 });
 
 module.exports = {
   entry: [
-    './app/index',
+    './index',
   ],
   mode: 'production',
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'dist/'),
     publicPath: '/',
   },
   resolve: {
     alias: {
       resources: path.resolve(__dirname, 'resources'),
       app: path.resolve(__dirname, 'app'),
+      utils: path.resolve(__dirname, 'app/utils'),
+      components: path.resolve(__dirname, 'app/components'),
+      router: path.resolve(__dirname, 'app/router'),
     },
   },
   module: {
     rules: [
       {
-        test: /\.js$/,
-        use: ['babel-loader'],
+        test: /\.m?js|\.jsx$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              '@babel/preset-env',
+              '@babel/preset-react',
+            ],
+            plugins: [
+              ["@babel/plugin-proposal-decorators", { "legacy": true }],
+              ["@babel/plugin-proposal-class-properties", {"loose": true}],
+              "@babel/plugin-proposal-function-sent",
+              "@babel/plugin-proposal-export-namespace-from",
+              "@babel/plugin-proposal-numeric-separator",
+              "@babel/plugin-proposal-throw-expressions"
+            ]
+          }
+        }
       },
       {
         test: /\.css$/,
@@ -60,19 +80,6 @@ module.exports = {
           publicPath: path.join(__dirname, 'dist/'),
         }),
       },
-      // { // parse error
-      //   test: /\.(png|jpg|gif|svg|ico|jpeg)$/,
-      //   use: [
-      //     {
-      //       loader: 'url-loader',
-      //       options: {
-      //         limit: 8192,
-      //         name: '[path][name].[ext]',
-      //         fallback: 'file-loader',
-      //       },
-      //     },
-      //   ],
-      // },
       {
         test: /\.html$/,
         use: {
@@ -95,8 +102,8 @@ module.exports = {
 
   plugins: [
     dllRefPlugin,
-    extractLess,
     extractCss,
+    extractLess,
     new webpack.NamedModulesPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new HtmlWebpackPlugin({ template: 'index.html', inject: false }),
