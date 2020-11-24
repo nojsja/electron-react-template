@@ -18,9 +18,9 @@ class Builder {
     const { name, version } = this.packageInfo;
     const resourcesMap = {
       win: () => [`./build/${name}\ Setup\ ${version}.exe`],
-      linux: () => ['./build/linux-unpacked'],
+      linux: () => [`./build/${name}-${version}.zip`],
       mac: () => [`./build/${name}-${version}.dmg`],
-      all: () => resourcesMap['win']().concat(resourcesMap['linux']()).concat(resourcesMap['mac']())
+      all: () => [...resourcesMap['win'](), ...resourcesMap['linux'](), ...resourcesMap['mac']()]
     };
     this.resources = resourcesMap[platform]();
   }
@@ -39,12 +39,12 @@ class Builder {
       fs.writeFileSync('./package.json', JSON.stringify({
         ...originConf,
         ...editConf
-      }));
+      }, null, 2));
     } else if (envConf.work_env === 'office') {
       fs.writeFileSync('./package.json', JSON.stringify({
         ...originConf,
         ...officeConf
-      }));
+      }, null, 2));
     } else {
       console_log(`read env file error! please check path ./config.json.`, 'red');
       process.exit(1);
@@ -61,9 +61,16 @@ class Builder {
     this.resources
     .filter((resource) => fs.existsSync(resource))
     .forEach((resource) => {
-      fs.copyFileSync(resource,  `${tmp}/${path.basename(resource)}`);
+      fs.copyFileSync(resource,  `${tmp}/`);
     });
-    return compress(tmp, `${tmp}.zip`);
+    return compress(tmp, `${tmp}.zip`).then((error) => {
+      if (error) {
+        return console.error(error);
+      }
+      if (fs.existsSync('../build')) fs.rmdirSync('../build', { recursive: true });
+      fs.mkdirSync('../build');
+      fs.copyFileSync(`${tmp}.zip`, '../build');
+    });
   }
 
   /* 打包前清理环境 */
@@ -141,21 +148,22 @@ function Main() {
   let tmp;
   while (params.length) {
     tmp = params.shift();
+    console.log(tmp, params);
     switch (tmp) {
       case 'build-win':
-        const winBuilder = new Builder('win', params.length ? params.shift() : '');
+        const winBuilder = new Builder('win', ...params);
         winBuilder.build();
         break;
       case 'build-linux':
-        const linuxBuilder = new Builder('linux', params.length ? params.shift() : '');
+        const linuxBuilder = new Builder('linux', ...params);
         linuxBuilder.build();
         break;
       case 'build-mac':
-        const macBuilder = new Builder('mac', params.length ? params.shift() : '');
+        const macBuilder = new Builder('mac', ...params);
         macBuilder.build();
         break;
       case 'build-all':
-        const allBuilder = new Builder('all', params.length ? params.shift() : '');
+        const allBuilder = new Builder('all', ...params);
         allBuilder.build();
         break;
       case 'clean-build':

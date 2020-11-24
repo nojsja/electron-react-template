@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const { copyDirSync, exec, execRealtime, console_log } = require('./server/build.utils');
+const console = require('console');
 
 /*
    * 函数调用list
@@ -31,22 +32,22 @@ const func = {
   /* build for win platform */
   'build-win': async (env) => {
     await func['web-dist']();
-    await execRealtime(`node ./build.js build-win ${env}`, { cwd: './server' });
+    await execRealtime(`node ./build.js build-win ${env || ''}`, { cwd: './server' });
   },
   /* build for linux platform */
   'build-linux': async (env) => {
     await func['web-dist']();
-    await execRealtime(`node ./build.js build-linux ${env}`, { cwd: './server' });
+    await execRealtime(`node ./build.js build-linux ${env || ''}`, { cwd: './server' });
   },
   /* build for mac platform */
   'build-mac': async (env) => {
     await func['web-dist']();
-    await execRealtime(`node ./build.js build-mac ${env}`, { cwd: './server' });
+    await execRealtime(`node ./build.js build-mac ${env || ''}`, { cwd: './server' });
   },
   /* build for all platform */
   'build-all': async (env) => {
     await func['web-dist']();
-    await execRealtime(`node ./build.js build-all ${env}`, { cwd: './server' });
+    await execRealtime(`node ./build.js build-all ${env || ''}`, { cwd: './server' });
   },
   'clean-build': async (env) => {
     await execRealtime('node ./build.js clean-build', { cwd: './server' });
@@ -94,7 +95,7 @@ function Main() {
   while (params.length) {
     tmp = params.shift();
     if (func[tmp]) {
-      func[tmp](params.length ? params.shift() : '');
+      func[tmp](...params);
     } else {
       console_log(`\nparam - ${tmp} is not match any already defined functions!`, 'red');
       process.exit(1);

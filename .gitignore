@@ -4,3 +4,4 @@ server/build
 .eslintcache
 .ftpconfig
 **/.vscode
+build
