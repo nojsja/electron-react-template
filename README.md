@@ -1,5 +1,5 @@
 ### electron-react-template
-[ electron8 + react16 + mobx4 + webpack4 + react-router4 + babel7 + eslint + editorconfig ] development template.
+[ electron9 + react16 + mobx4 + webpack4 + react-router4 + babel7 + eslint + editorconfig ] development template.
 
 ### build command
 
