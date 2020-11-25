@@ -1,7 +1,7 @@
 {
   "name": "react-mobx-template",
   "description": "[ react16 + mobx4 + webpack4 + react-router4 + babel7 + eslint + editorconfig ] development template.",
-  "version": "v1.0.1",
+  "version": "1.0.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/nojsja/react-mobx-template.it"
@@ -39,7 +39,6 @@
     "react-treeview-semantic": "^1.0.5",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^2.0.1",
-    "webpack-dev-server": "^3.11.0",
     "yaml": "^1.10.0"
   },
   "devDependencies": {
@@ -74,6 +73,7 @@
     "style-loader": "^0.21.0",
     "url-loader": "^1.1.2",
     "webpack": "^4.19.0",
+    "webpack-dev-server": "^3.11.0",
     "webpack-cli": "^4.2.0"
   }
 }

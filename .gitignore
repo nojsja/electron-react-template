@@ -5,3 +5,5 @@ server/build
 .ftpconfig
 **/.vscode
 build
+**/yarn.lock
+**/package-lock.json

@@ -1,7 +1,7 @@
 {
   "name": "electron-react-template",
-  "description": "[ electron3 + react16 + webpack4 + react-router4 ] development template",
-  "version": "1.0.0",
+  "description": "[ electron9 + react16 + webpack4 + react-router4 ] development template",
+  "version": "1.0.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/NoJsJa/electronux.git"
