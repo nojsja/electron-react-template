@@ -30,7 +30,7 @@ const func = {
   },
   /* build for win platform */
   'build-win': async (env) => {
-    // await func['web-dist']();
+    await func['web-dist']();
     await execRealtime(`node ./build.js build-win ${env}`, { cwd: './service' });
   },
   /* build for linux platform */
