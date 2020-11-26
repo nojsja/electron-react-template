@@ -11,9 +11,9 @@ const { copyDirSync, exec, execRealtime, console_log, compress, uncompress } = r
    * @param --help | -h 查看帮助信息
    */
 class Builder {
-  constructor(platform, conf) {
+  constructor(platform, ...conf) {
     this.platform = platform;
-    this.conf = conf ? conf.replace('--', '') : null;
+    this.conf = conf[0] ? conf[0].replace('--', '') : null;
     this.packageInfo = require('./package.json');
     const { name, version } = this.packageInfo;
     const resourcesMap = {
@@ -148,39 +148,35 @@ class Builder {
 function Main() {
   const params = process.argv.splice(2);
   let tmp;
-  while (params.length) {
-    tmp = params.shift();
-    console.log(tmp, params);
-    switch (tmp) {
-      case 'build-win':
-        const winBuilder = new Builder('win', ...params);
-        winBuilder.build();
-        break;
-      case 'build-linux':
-        const linuxBuilder = new Builder('linux', ...params);
-        linuxBuilder.build();
-        break;
-      case 'build-mac':
-        const macBuilder = new Builder('mac', ...params);
-        macBuilder.build();
-        break;
-      case 'build-all':
-        const allBuilder = new Builder('all', ...params);
-        allBuilder.build();
-        break;
-      case 'clean-build':
-        Builder.cleanBuild();
-        break;
-      case '--help':
-        Builder.help();
-        break;
-      case '-h':
-        break;
-      default:
-        console_log(`param - ${tmp} is not match any already defined functions!`, 'red');
-        process.exit(1);
-        break;
-    }
+  tmp = params.shift();
+  switch (tmp) {
+    case 'build-win':
+      const winBuilder = new Builder('win', ...params);
+      winBuilder.build();
+      break;
+    case 'build-linux':
+      const linuxBuilder = new Builder('linux', ...params);
+      linuxBuilder.build();
+      break;
+    case 'build-mac':
+      const macBuilder = new Builder('mac', ...params);
+      macBuilder.build();
+      break;
+    case 'build-all':
+      const allBuilder = new Builder('all', ...params);
+      allBuilder.build();
+      break;
+    case 'clean-build':
+      Builder.cleanBuild();
+      break;
+    case '--help':
+      Builder.help();
+      break;
+    case '-h':
+      break;
+    default:
+      console_log(`param - ${tmp} is not match any already defined functions!`, 'red');
+      process.exit(1);
   }
 }
 

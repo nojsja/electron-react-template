@@ -32,22 +32,22 @@ const func = {
   /* build for win platform */
   'build-win': async (env) => {
     await func['web-dist']();
-    await execRealtime(`node ./build.js build-win ${env || ''}`, { cwd: './service' });
+    await execRealtime(`node ./build.js build-win ${env}`, { cwd: './service' });
   },
   /* build for linux platform */
   'build-linux': async (env) => {
     await func['web-dist']();
-    await execRealtime(`node ./build.js build-linux ${env || ''}`, { cwd: './service' });
+    await execRealtime(`node ./build.js build-linux ${env}`, { cwd: './service' });
   },
   /* build for mac platform */
   'build-mac': async (env) => {
     await func['web-dist']();
-    await execRealtime(`node ./build.js build-mac ${env || ''}`, { cwd: './service' });
+    await execRealtime(`node ./build.js build-mac ${env}`, { cwd: './service' });
   },
   /* build for all platform */
   'build-all': async (env) => {
     await func['web-dist']();
-    await execRealtime(`node ./build.js build-all ${env || ''}`, { cwd: './service' });
+    await execRealtime(`node ./build.js build-all ${env}`, { cwd: './service' });
   },
   'clean-build': async (env) => {
     await execRealtime('node ./build.js clean-build', { cwd: './service' });
@@ -91,16 +91,23 @@ const func = {
 /* Main */
 function Main() {
   const params = process.argv.splice(2);
+  const indexArray = [];
   let tmp;
-  while (params.length) {
-    tmp = params.shift();
-    if (func[tmp]) {
-      func[tmp](...params);
-    } else {
-      console_log(`\nparam - ${tmp} is not match any already defined functions!`, 'red');
-      process.exit(1);
-    }
-  }
+
+  params.forEach((key, i) => {
+    if (func[key] && (typeof func[key] === 'function')) indexArray.push(i);
+  });
+  
+  indexArray.forEach((index, i) => {
+    tmp = indexArray.slice(index + 1, indexArray[i + 1]).map(i => params[i]);
+    if (tmp.length)
+      func[params[index]](...tmp);
+    else
+      func[params[index]]('');
+  });
+
+  // console_log(`\nparam - ${tmp} is not match any already defined function!`, 'red');
+  // process.exit(1);
 }
 
 Main();
