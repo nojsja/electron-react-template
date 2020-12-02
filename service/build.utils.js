@@ -4,6 +4,25 @@ const child = require('child_process');
 
 const compressing = require('compressing');
 
+/**
+  * removeDirSync [remove dir sync vertion]
+  * @author nojsja
+  * @param  {[String]} _path [path to a directory]
+  */
+exports.removeDirSync = function(_path) {
+  if( fs.existsSync(_path) ) {
+    fs.readdirSync(_path).forEach(function(file,index){
+      const curPath = _path + "/" + file;
+      if(fs.lstatSync(curPath).isDirectory()) { // recurse
+        exports.removeDirSync(curPath);
+      } else { // delete file
+        fs.unlinkSync(curPath);
+      }
+    });
+    fs.rmdirSync(_path);
+  }
+};
+
 /*
 * 复制目录、子目录，及其中的文件
 * @param src {String} 要复制的目录

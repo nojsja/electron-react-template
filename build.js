@@ -1,7 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-const { copyDirSync, exec, execRealtime, console_log } = require('./service/build.utils');
-const console = require('console');
+const { copyDirSync, exec, execRealtime, console_log, removeDirSync } = require('./service/build.utils');
 
 /*
    * 函数调用list
@@ -23,7 +22,7 @@ const func = {
     .then(() => execRealtime('npm run build', { cwd: './view' }))
     .then(() => {
       if (fs.existsSync('./service/dist')) {
-        fs.rmdirSync('./service/dist', { recursive: true });
+        removeDirSync('./service/dist');
       }
       fs.mkdirSync('./service/dist');
       copyDirSync('./view/dist', './service/dist');
@@ -52,7 +51,7 @@ const func = {
   'clean-build': async (env) => {
     await execRealtime('node ./build.js clean-build', { cwd: './service' });
     if (fs.existsSync('./view/dist')) {
-      fs.rmdirSync('./view/dist', { recursive: true });
+      removeDirSync('./view/dist');
     }
     await execRealtime('git checkout -- dist', { cwd: './view' });
     console_log(`\nclean finishied!`);
@@ -105,9 +104,6 @@ function Main() {
     else
       func[params[index]]('');
   });
-
-  // console_log(`\nparam - ${tmp} is not match any already defined function!`, 'red');
-  // process.exit(1);
 }
 
 Main();
