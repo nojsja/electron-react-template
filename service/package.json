@@ -40,6 +40,7 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "electron-re": "^1.0.6",
     "lowdb": "^1.0.0",
     "ping": "^0.2.2",
     "qs": "^6.9.3"

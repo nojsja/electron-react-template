@@ -1,6 +1,8 @@
   const fs = require('fs');
   const fsPromise = fs.promises;
   const path = require('path');
+  const { ProcessHost } = require('electron-re');
+
   const utils = require('./child.utils');
   const requireLang = require('../../lang');
   const { readFileBlock, uploadRecordStore, unlink } = utils;
@@ -8,55 +10,49 @@
   const uploadStore = uploadRecordStore();
   requireLang(process.env.LANG);
 
-  process.on('message', ({action, params, id }) => {
-    switch (action) {
-      case 'init-works':
-        initWorks(params).then((rsp) => {
-          process.send({result: rsp, id});
-        });
-        break;
-      case 'upload-works':
-        uploadWorks(params, id).then(rsp => {
-          process.send({result: rsp, id});
-        });
-        break;
-      case 'close':
-        close(params, id).then(rsp => {
-          process.send({result: rsp, id});
-        });
-        break;
-      case 'record-set':
-        uploadStore.set(params);
-        process.send({result: null, id});
-        break;
-      case 'record-get':
-        process.send({result: uploadStore.get(params), id});
-        break;
-      case 'record-get-all':
-        process.send({result: uploadStore.getAll(params), id});
-        break;
-      case 'record-update':
-        uploadStore.update(params);
-        process.send({result: null, id});
-        break;
-      case 'record-remove':
-        uploadStore.remove(params);
-        process.send({result: null, id});
-        break;
-      case 'record-reset': 
-        uploadStore.reset(params);
-        process.send({result: null, id});
-      break;
-      case 'unlink': 
-        unlink(params).then(rsp => {
-          process.send({result: rsp, id});
-        })
-      break;
-      default:
-        break;
-    }
-  });
-
+  ProcessHost
+    .registry('init-works', (params) => {
+      return initWorks(params).then((rsp) => {
+        return rsp;
+      });
+    })
+    .registry('upload-works', (params) => {
+      return uploadWorks(params).then(rsp => {
+        return rsp;
+      });
+    })
+    .registry('close', (params) => {
+      return close(params).then(rsp => {
+        return rsp;
+      });
+    })
+    .registry('record-set', (params) => {
+      uploadStore.set(params);
+      return null;
+    })
+    .registry('record-get', (params) => {
+      return uploadStore.get(params);
+    })
+    .registry('record-get-all', (params) => {
+      return uploadStore.getAll(params);
+    })
+    .registry('record-update', (params) => {
+      uploadStore.update(params);
+      return null;
+    })
+    .registry('record-remove', (params) => {
+      uploadStore.remove(params);
+      return null;
+    })
+    .registry('record-reset', (params) => {
+      uploadStore.reset(params);
+      return null;
+    })
+    .registry('unlink', (params) => {
+      return unlink(params).then(rsp => {
+        return rsp;
+      });
+    });
   /* *************** file logic *************** */
 
   /* 上传初始化工作 */
