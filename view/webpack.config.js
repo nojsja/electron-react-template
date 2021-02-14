@@ -1,10 +1,13 @@
 const path = require('path');
 const webpack = require('webpack');
+const os = require('os');
+const HappyPack = require('happypack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 
 module.exports = {
-  devtool: 'source-map',
+  devtool: 'cheap-module-eval-source-map',
   entry: [
-    'react-hot-loader/patch',
     './index.js',
   ],
   mode: 'development',
@@ -14,56 +17,32 @@ module.exports = {
     publicPath: '/',
   },
   resolve: {
-    extensions: [".js", ".jsx", ".es6"],
+    modules: [path.resolve(__dirname, 'node_modules')],
     alias: {
+      // dir
       resources: path.resolve(__dirname, 'resources'),
       app: path.resolve(__dirname, 'app'),
       utils: path.resolve(__dirname, 'app/utils'),
       components: path.resolve(__dirname, 'app/components'),
       router: path.resolve(__dirname, 'app/router'),
     },
+    extensions: ['.js', '.jsx'],
   },
   module: {
+    noParse:[/jquery/],
     rules: [
       {
         test: /\.m?js|\.jsx$/,
         exclude: /(node_modules|bower_components)/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: [
-              '@babel/preset-env',
-              '@babel/preset-react',
-            ],
-            plugins: [
-              ["@babel/plugin-proposal-decorators", { "legacy": true }],
-              ["@babel/plugin-proposal-class-properties", {"loose": true}],
-              "@babel/plugin-proposal-function-sent",
-              "@babel/plugin-proposal-export-namespace-from",
-              "@babel/plugin-proposal-numeric-separator",
-              "@babel/plugin-proposal-throw-expressions",
-              "react-hot-loader/babel"
-            ]
-          }
-        }
+        use: ['happypack/loader?id=babel']
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        use: ['happypack/loader?id=css'],
       },
       {
         test: /\.less$/,
-        use: [
-          {
-            loader: 'style-loader', // 从 JS 中创建样式节点
-          },
-          {
-            loader: 'css-loader', // 转化 CSS 为 CommonJS
-          },
-          {
-            loader: 'less-loader', // 编译 Less 为 CSS
-          },
-        ],
+        use: ['happypack/loader?id=less'],
       },
       {
         test: /\.html$/,
@@ -73,31 +52,66 @@ module.exports = {
       },
       {
         test: /\.(png|jpg|gif|svg|ico|woff|eot|ttf|woff2|icns)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[path][name].[ext]',
-            },
-          },
-        ],
+        use: ['happypack/loader?id=url'],
       },
     ],
   },
 
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('development'),
+      },
+    }),
+    new HappyPack({
+      id: 'babel',
+      threadPool: happyThreadPool,
+      loaders: ["babel-loader?cacheDirectory"],
+    }),
+    new HappyPack({
+      id: 'css',
+      threadPool: happyThreadPool,
+      loaders: ['style-loader', 'css-loader'],
+    }),
+    new HappyPack({
+      id: 'less',
+      threadPool: happyThreadPool,
+      loaders: ['style-loader', 'css-loader', 'less-loader'],
+    }),
+    new HappyPack({
+      id: 'url',
+      threadPool: happyThreadPool,
+      loaders: [
+        {
+          loader: 'url-loader',
+          options: {
+            limit: 50,
+            outputPath: 'assets/',
+          },
+        },
+      ],
+    }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: 'index.html',
+      inject: 'body',
+      minify: true
+    }),
   ],
 
   devServer: {
     host: 'localhost',
     port: 3000,
     compress: true,
-    contentBase: path.join(__dirname, 'dist'),
+    contentBase: '.',
     historyApiFallback: true,
     hot: true,
+    inline: true,
+    liveReload: false
   },
-  target: "electron-renderer"
+
+  target: 'electron-renderer',
 };
