@@ -51,8 +51,29 @@ module.exports = {
         },
       },
       {
-        test: /\.(png|jpg|gif|svg|ico|woff|eot|ttf|woff2|icns)$/,
-        use: ['happypack/loader?id=url'],
+        test: /\.(ico|woff|eot|ttf|woff2|icns)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 500, // 小于500B的文件直接写入bunndle
+              name: '[name]_[hash:8].[ext]',
+              outputPath: 'resources/assets',
+            },
+          },
+        ]
+      },
+      {
+        test: /\.(png|jpg|gif|svg|jpeg)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'resources/images',
+            },
+          }
+        ],
       },
     ],
   },
@@ -77,19 +98,6 @@ module.exports = {
       id: 'less',
       threadPool: happyThreadPool,
       loaders: ['style-loader', 'css-loader', 'less-loader'],
-    }),
-    new HappyPack({
-      id: 'url',
-      threadPool: happyThreadPool,
-      loaders: [
-        {
-          loader: 'url-loader',
-          options: {
-            limit: 50,
-            outputPath: 'assets/',
-          },
-        },
-      ],
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
