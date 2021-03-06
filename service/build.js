@@ -146,7 +146,7 @@ const { copyDirSync, exec, execRealtime, console_log, compress, uncompress, remo
   
   /* Main */
   function Main() {
-    const params = process.argv.splice(2);
+    const params = process.argv.slice(2);
     let tmp;
     tmp = params.shift();
     switch (tmp) {
@@ -173,6 +173,7 @@ const { copyDirSync, exec, execRealtime, console_log, compress, uncompress, remo
         Builder.help();
         break;
       case '-h':
+        Builder.help();
         break;
       default:
         console_log(`param - ${tmp} is not match any already defined functions!`, 'red');
