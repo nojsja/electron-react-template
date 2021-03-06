@@ -91,16 +91,16 @@ const func = {
 function Main() {
   const params = process.argv.splice(2);
   const indexArray = [];
-  let tmp;
+  let args;
 
   params.forEach((key, i) => {
     if (func[key] && (typeof func[key] === 'function')) indexArray.push(i);
   });
   
   indexArray.forEach((index, i) => {
-    tmp = indexArray.slice(index + 1, indexArray[i + 1]).map(i => params[i]);
-    if (tmp.length)
-      func[params[index]](...tmp);
+    args = indexArray.slice(index + 1, indexArray[i + 1]).map(i => params[i]);
+    if (args.length)
+      func[params[index]](...args);
     else
       func[params[index]]('');
   });
