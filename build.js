@@ -60,23 +60,18 @@ const func = {
   '--help': () => {
     console_log('\
     \n\
-    description: build command for RhinoDisk.\n\
+    description: build command for electron-re.\n\
     command: node build.js [action] [config]\n\
     |\n\
     |\n\
     |______ param: [--help | -h ] => show usage info.\n\
-    |______ param: [build-win   ] [--edit | --office] => build package for windows, the default conf file is ./service/config.json.\n\
-    |______ param: [build-linux ] [--edit | --office] => build package for linux, the default conf file is ./service/config.json\n\
-    |______ param: [build-mac   ] [--edit | --office] => build package for mac, the default conf file is ./service/config.json\n\
-    |______ param: [build-all   ] [--edit | --office] => build package for all platform, the default conf file is ./service/config.json\n\
+    |______ param: [build:libs ] => build command for service component.\n\
+    |______ param: [build:ui   ] => build command for ui component.\n\
+    |______ param: [build      ] => build command for ui and service\n\
     |______ param: [clean-build ] => clean build directory after build\n\
     |\n\
-    |______ example1: node build.js build-win\n\
-    |______ example2: node build.js build-linux\n\
-    |______ example3: node build.js build-mac\n\
-    |______ example4: node build.js build-all\n\
-    |______ example5: node build.js build-win --edit\n\
-    |______ example6: node build.js build-win --office\n\
+    |______ example1: node build.js build:libs\n\
+    |______ example2: node build.js build:ui\n\
     |______ example7: node build.js --help\n\
     |______ example8: node build.js clean-build\n\
     \n\
